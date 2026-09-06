@@ -3,14 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>What Movie to Watch Tonight</title>
+  <title>What Movie to Watch Tonight - Top 3 Recommendations</title>
   <style>
-    body { font-family: system-ui, sans-serif; background: #121212; color: #fff; text-align: center; padding: 3rem; }
-    h1 { color: #f39c12; }
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #f59e0b;
+      --text: #f8fafc;
+      --subtext: #94a3b8;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    h1 { color: var(--accent); margin-bottom: 0.25rem; text-align: center; }
+    p.subtitle { color: var(--subtext); margin-bottom: 2rem; text-align: center; }
+    
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      background: #182234;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      max-width: 800px;
+      width: 100%;
+      margin-bottom: 2.5rem;
+    }
+    select, button {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+    select:focus { border-color: var(--accent); }
+    button {
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s;
+    }
+    button:hover { background: #d97706; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .card img { width: 100%; height: 380px; object-fit: cover; }
+    .card-body { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; }
+    .card-title { font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem; }
+    .rating { color: var(--accent); font-weight: bold; margin-bottom: 0.75rem; }
+    .overview { font-size: 0.9rem; color: var(--subtext); line-height: 1.4; }
   </style>
 </head>
 <body>
+
   <h1>What Movie to Watch Tonight</h1>
-  <p>Your ultimate movie recommendation generator is under construction.</p>
+  <p class="subtitle">Select your preferences to discover your Top 3 movie picks.</p>
+
+  <div class="filters">
+    <select id="genre">
+      <option value="">All Genres</option>
+      <option value="28">Action</option>
+      <option value="35">Comedy</option>
+      <option value="18">Drama</option>
+      <option value="878">Sci-Fi</option>
+      <option value="27">Horror</option>
+      <option value="10749">Romance</option>
+      <option value="53">Thriller</option>
+    </select>
+
+    <select id="language">
+      <option value="">All Countries / Languages</option>
+      <option value="ko">Korean (K-Cinema)</option>
+      <option value="ja">Japanese</option>
+      <option value="en">English</option>
+      <option value="fr">French</option>
+      <option value="es">Spanish</option>
+    </select>
+
+    <button onclick="fetchTop3()">Find Top 3 Movies</button>
+  </div>
+
+  <div id="results" class="grid"></div>
+
+  <script>
+    const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; // <-- Replace with your TMDb API Key
+
+    async function fetchTop3() {
+      const genre = document.getElementById('genre').value;
+      const lang = document.getElementById('language').value;
+      const resultsContainer = document.getElementById('results');
+
+      resultsContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">Searching top-rated movies...</p>';
+
+      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=500`;
+      
+      if (genre) url += `&with_genres=${genre}`;
+      if (lang) url += `&with_original_language=${lang}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (!data.results || data.results.length === 0) {
+          resultsContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">No movies found matching those criteria.</p>';
+          return;
+        }
+
+        const top3 = data.results.slice(0, 3);
+
+        resultsContainer.innerHTML = top3.map(movie => `
+          <div class="card">
+            <img src="${movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster'}" alt="${movie.title}">
+            <div class="card-body">
+              <div class="card-title">${movie.title}</div>
+              <div class="rating">⭐ ${movie.vote_average.toFixed(1)} / 10</div>
+              <div class="overview">${movie.overview ? movie.overview.substring(0, 130) + '...' : 'No summary available.'}</div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        resultsContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">Error fetching data. Check your API key or internet connection.</p>';
+      }
+    }
+  </script>
 </body>
 </html>
