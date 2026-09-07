@@ -75,21 +75,24 @@
       width: 90%;
       max-width: 1400px;
       display: flex;
+      flex-direction: column;
       gap: 2rem;
-      flex-wrap: wrap;
     }
 
-    .sidebar {
-      width: 340px;
-      flex-shrink: 0;
+    /* HORIZONTAL FILTERS GRID */
+    .filters-horizontal {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      align-items: start;
     }
 
     .filter-section {
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      overflow: hidden;
+      overflow: visible; /* Needed for dropdown suggestions */
       background-color: var(--card-bg);
-      margin-bottom: 1rem;
+      position: relative;
     }
 
     .filter-header {
@@ -99,6 +102,7 @@
       align-items: center;
       cursor: pointer;
       user-select: none;
+      border-radius: 12px;
     }
 
     .filter-header:hover {
@@ -126,9 +130,9 @@
       padding: 1.25rem;
       display: none;
       border-top: 1px solid var(--border-color);
+      position: relative;
     }
 
-    /* Accordion Active State */
     .filter-section.active .filter-content {
       display: block;
     }
@@ -137,47 +141,46 @@
       transform: rotate(180deg);
     }
 
+    /* GENRE BUBBLES */
     .genre-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
 
     .genre-bubble {
       background-color: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
       border-radius: 30px;
-      padding: 0.5rem 0.85rem;
+      padding: 0.4rem 0.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
       transition: all 0.2s;
-      min-height: 40px;
+      min-height: 38px;
       box-sizing: border-box;
-      position: relative;
     }
 
     .genre-bubble .bubble-label {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.9rem;
+      gap: 0.35rem;
+      font-size: 0.85rem;
     }
 
     .genre-bubble .checkbox {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border: 1px solid var(--border-color);
       border-radius: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: transparent;
     }
 
-    /* Selected Genre Bubble State */
     .genre-bubble.selected {
       background-color: var(--accent-orange);
       border-color: var(--accent-orange);
@@ -188,6 +191,12 @@
     .genre-bubble.selected .checkbox {
       border-color: #000;
       color: #000;
+    }
+
+    /* INPUTS & AUTOCOMPLETE DROPDOWNS */
+    .autocomplete-wrapper {
+      position: relative;
+      width: 100%;
     }
 
     .optional-input, .optional-select {
@@ -206,20 +215,59 @@
       border-color: var(--accent-orange);
     }
 
+    .suggestions-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #1e293b;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-top: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 100;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: none;
+    }
+
+    .suggestion-item {
+      padding: 0.6rem 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .suggestion-item:hover {
+      background-color: var(--accent-orange);
+      color: #000;
+    }
+
+    .suggestion-item img {
+      width: 28px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 4px;
+      background-color: #0f172a;
+    }
+
+    /* PROPOSALS SECTION */
     .proposals {
-      flex-grow: 1;
-      min-width: 300px;
+      width: 100%;
     }
 
     .proposals-header {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       margin-bottom: 1.5rem;
       margin-top: 0;
     }
 
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
 
@@ -239,7 +287,7 @@
 
     .movie-card img {
       width: 100%;
-      height: 360px;
+      height: 380px;
       object-fit: cover;
       background-color: #111;
     }
@@ -304,9 +352,10 @@
   </header>
 
   <main>
-    <aside class="sidebar">
+    <!-- HORIZONTAL FILTERS BAND -->
+    <div class="filters-horizontal">
       
-      <!-- 1. GENRE (Required, expanded by default) -->
+      <!-- 1. GENRE -->
       <div class="filter-section active">
         <div class="filter-header" onclick="toggleSection(this)">
           <h2>1. Select Your Genre <span class="required-tag">(required)</span></h2>
@@ -350,32 +399,38 @@
         </div>
       </div>
 
-      <!-- 2. ACTOR (Optional) -->
-      <div class="filter-section">
+      <!-- 2. FAVORITE ACTOR -->
+      <div class="filter-section active">
         <div class="filter-header" onclick="toggleSection(this)">
-          <h2>2. Optional: Favorite Actor</h2>
+          <h2>2. Favorite Actor (optional)</h2>
           <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
-          <input type="text" id="actorInput" placeholder="e.g. Timothée Chalamet" class="optional-input">
+          <div class="autocomplete-wrapper">
+            <input type="text" id="actorInput" placeholder="e.g. George Clooney" class="optional-input" autocomplete="off" oninput="handleAutocomplete('actorInput', 'actorSuggestions', 'actor')">
+            <div id="actorSuggestions" class="suggestions-list"></div>
+          </div>
         </div>
       </div>
 
-      <!-- 3. DIRECTOR (Optional) -->
-      <div class="filter-section">
+      <!-- 3. FAVORITE DIRECTOR -->
+      <div class="filter-section active">
         <div class="filter-header" onclick="toggleSection(this)">
-          <h2>3. Optional: Director</h2>
+          <h2>3. Favorite Director (optional)</h2>
           <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
-          <input type="text" id="directorInput" placeholder="e.g. Denis Villeneuve" class="optional-input">
+          <div class="autocomplete-wrapper">
+            <input type="text" id="directorInput" placeholder="e.g. Christopher Nolan" class="optional-input" autocomplete="off" oninput="handleAutocomplete('directorInput', 'directorSuggestions', 'director')">
+            <div id="directorSuggestions" class="suggestions-list"></div>
+          </div>
         </div>
       </div>
 
-      <!-- 4. COUNTRY / LANGUAGE (Optional) -->
-      <div class="filter-section">
+      <!-- 4. COUNTRY / LANGUAGE -->
+      <div class="filter-section active">
         <div class="filter-header" onclick="toggleSection(this)">
-          <h2>4. Country / Language</h2>
+          <h2>4. Country / Language (optional)</h2>
           <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
@@ -390,48 +445,96 @@
         </div>
       </div>
 
-    </aside>
+    </div>
 
+    <!-- PROPOSALS SECTION -->
     <section class="proposals">
       <h2 class="proposals-header">Top 3 Proposals</h2>
       <div id="gridContainer" class="grid-container">
-        <p class="status-msg">Select a genre on the left and click "Find My Movie".</p>
+        <p class="status-msg">Select a genre above and click "Find My Movie".</p>
       </div>
     </section>
   </main>
 
   <script>
     const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; // Replace with your TMDb API Key
-    let selectedGenreId = null; // Unselected by default
+    let selectedGenreId = null;
+    let selectedActorId = null;
+    let selectedDirectorId = null;
+    let debounceTimer = null;
 
-    // Hide / Reveal Section Accordion
     function toggleSection(header) {
       const section = header.parentElement;
       section.classList.toggle('active');
     }
 
-    // Select single genre option
     function selectGenre(element) {
-      // Unselect all other bubbles
       document.querySelectorAll('.genre-bubble').forEach(bubble => {
         bubble.classList.remove('selected');
       });
-
-      // Highlight clicked bubble
       element.classList.add('selected');
       selectedGenreId = element.getAttribute('data-genre-id');
     }
 
-    async function searchPersonId(name) {
-      if (!name) return null;
-      try {
-        const res = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(name)}`);
-        const data = await res.json();
-        return data.results && data.results.length > 0 ? data.results[0].id : null;
-      } catch (e) {
-        return null;
+    // AUTOCOMPLETE FOR ACTOR & DIRECTOR
+    function handleAutocomplete(inputId, listId, type) {
+      clearTimeout(debounceTimer);
+      const query = document.getElementById(inputId).value.trim();
+      const suggestionsList = document.getElementById(listId);
+
+      if (type === 'actor') selectedActorId = null;
+      if (type === 'director') selectedDirectorId = null;
+
+      if (query.length < 2) {
+        suggestionsList.style.display = 'none';
+        return;
       }
+
+      debounceTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`);
+          const data = await res.json();
+
+          if (!data.results || data.results.length === 0) {
+            suggestionsList.style.display = 'none';
+            return;
+          }
+
+          const items = data.results.slice(0, 5);
+          suggestionsList.innerHTML = items.map(person => {
+            const img = person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://via.placeholder.com/28x38?text=?';
+            const knownFor = person.known_for_department || '';
+            return `
+              <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${person.name}', ${person.id}, '${type}')">
+                <img src="${img}" alt="${person.name}">
+                <div>
+                  <strong>${person.name}</strong>
+                  ${knownFor ? `<br><small style="color:var(--text-muted);">${knownFor}</small>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          suggestionsList.style.display = 'block';
+        } catch (e) {
+          suggestionsList.style.display = 'none';
+        }
+      }, 300);
     }
+
+    function selectPerson(inputId, listId, name, personId, type) {
+      document.getElementById(inputId).value = name;
+      document.getElementById(listId).style.display = 'none';
+      if (type === 'actor') selectedActorId = personId;
+      if (type === 'director') selectedDirectorId = personId;
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.autocomplete-wrapper')) {
+        document.querySelectorAll('.suggestions-list').forEach(el => el.style.display = 'none');
+      }
+    });
 
     async function fetchTop3() {
       const container = document.getElementById('gridContainer');
@@ -443,21 +546,13 @@
 
       container.innerHTML = '<p class="status-msg">Searching top-rated movies...</p>';
 
-      const actorName = document.getElementById('actorInput').value.trim();
-      const directorName = document.getElementById('directorInput').value.trim();
       const language = document.getElementById('languageSelect').value;
-
-      let actorId = null;
-      let directorId = null;
-
-      if (actorName) actorId = await searchPersonId(actorName);
-      if (directorName) directorId = await searchPersonId(directorName);
 
       let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=300`;
 
       if (selectedGenreId) url += `&with_genres=${selectedGenreId}`;
-      if (actorId) url += `&with_cast=${actorId}`;
-      if (directorId) url += `&with_crew=${directorId}`;
+      if (selectedActorId) url += `&with_cast=${selectedActorId}`;
+      if (selectedDirectorId) url += `&with_crew=${selectedDirectorId}`;
       if (language) url += `&with_original_language=${language}`;
 
       try {
@@ -506,7 +601,7 @@
                     <span class="rating-badge imdb-badge">⭐ TMDb ${movie.vote_average.toFixed(1)}</span>
                   </div>
                   <div class="movie-meta" style="margin-top: 0.5rem; margin-bottom:0;">
-                    ${movie.overview ? movie.overview.substring(0, 90) + '...' : ''}
+                    ${movie.overview ? movie.overview.substring(0, 100) + '...' : ''}
                   </div>
                 </div>
               </div>
@@ -514,7 +609,7 @@
           `;
         }
       } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please ensure your API key is correctly inserted into line 219.</p>';
+        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please verify your API key in line 286.</p>';
       }
     }
   </script>
