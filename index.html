@@ -90,9 +90,15 @@
     .filter-section {
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      overflow: visible; /* Needed for dropdown suggestions */
       background-color: var(--card-bg);
       position: relative;
+      /* FIX: allow suggestions menu to overflow section borders */
+      overflow: visible !important;
+      z-index: 10;
+    }
+
+    .filter-section.active-dropdown {
+      z-index: 100; /* Elevate active section above others */
     }
 
     .filter-header {
@@ -131,6 +137,7 @@
       display: none;
       border-top: 1px solid var(--border-color);
       position: relative;
+      overflow: visible !important;
     }
 
     .filter-section.active .filter-content {
@@ -193,7 +200,7 @@
       color: #000;
     }
 
-    /* INPUTS & AUTOCOMPLETE DROPDOWNS */
+    /* AUTOCOMPLETE DROPDOWNS */
     .autocomplete-wrapper {
       position: relative;
       width: 100%;
@@ -221,13 +228,13 @@
       left: 0;
       right: 0;
       background-color: #1e293b;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--accent-orange);
       border-radius: 8px;
-      margin-top: 4px;
-      max-height: 200px;
+      margin-top: 6px;
+      max-height: 220px;
       overflow-y: auto;
-      z-index: 100;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      z-index: 9999;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
       display: none;
     }
 
@@ -247,8 +254,8 @@
     }
 
     .suggestion-item img {
-      width: 28px;
-      height: 38px;
+      width: 30px;
+      height: 40px;
       object-fit: cover;
       border-radius: 4px;
       background-color: #0f172a;
@@ -352,7 +359,6 @@
   </header>
 
   <main>
-    <!-- HORIZONTAL FILTERS BAND -->
     <div class="filters-horizontal">
       
       <!-- 1. GENRE -->
@@ -400,28 +406,28 @@
       </div>
 
       <!-- 2. FAVORITE ACTOR -->
-      <div class="filter-section active">
+      <div class="filter-section active" id="actorSection">
         <div class="filter-header" onclick="toggleSection(this)">
           <h2>2. Favorite Actor (optional)</h2>
           <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
           <div class="autocomplete-wrapper">
-            <input type="text" id="actorInput" placeholder="e.g. George Clooney" class="optional-input" autocomplete="off" oninput="handleAutocomplete('actorInput', 'actorSuggestions', 'actor')">
+            <input type="text" id="actorInput" placeholder="e.g. George Clooney or Clooney" class="optional-input" autocomplete="off" oninput="handleAutocomplete('actorInput', 'actorSuggestions', 'actor', 'actorSection')">
             <div id="actorSuggestions" class="suggestions-list"></div>
           </div>
         </div>
       </div>
 
       <!-- 3. FAVORITE DIRECTOR -->
-      <div class="filter-section active">
+      <div class="filter-section active" id="directorSection">
         <div class="filter-header" onclick="toggleSection(this)">
           <h2>3. Favorite Director (optional)</h2>
           <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
           <div class="autocomplete-wrapper">
-            <input type="text" id="directorInput" placeholder="e.g. Christopher Nolan" class="optional-input" autocomplete="off" oninput="handleAutocomplete('directorInput', 'directorSuggestions', 'director')">
+            <input type="text" id="directorInput" placeholder="e.g. Christopher Nolan or Nolan" class="optional-input" autocomplete="off" oninput="handleAutocomplete('directorInput', 'directorSuggestions', 'director', 'directorSection')">
             <div id="directorSuggestions" class="suggestions-list"></div>
           </div>
         </div>
@@ -457,7 +463,7 @@
   </main>
 
   <script>
-    const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; // Replace with your TMDb API Key
+    const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; // Replace with your valid TMDb API Key
     let selectedGenreId = null;
     let selectedActorId = null;
     let selectedDirectorId = null;
@@ -477,16 +483,19 @@
     }
 
     // AUTOCOMPLETE FOR ACTOR & DIRECTOR
-    function handleAutocomplete(inputId, listId, type) {
+    function handleAutocomplete(inputId, listId, type, sectionId) {
       clearTimeout(debounceTimer);
       const query = document.getElementById(inputId).value.trim();
       const suggestionsList = document.getElementById(listId);
+      const sectionElem = document.getElementById(sectionId);
 
       if (type === 'actor') selectedActorId = null;
       if (type === 'director') selectedDirectorId = null;
 
-      if (query.length < 2) {
+      // Single character trigger enables last-name search like "C" -> "Clooney"
+      if (query.length < 1) {
         suggestionsList.style.display = 'none';
+        if (sectionElem) sectionElem.classList.remove('active-dropdown');
         return;
       }
 
@@ -497,34 +506,50 @@
 
           if (!data.results || data.results.length === 0) {
             suggestionsList.style.display = 'none';
+            if (sectionElem) sectionElem.classList.remove('active-dropdown');
             return;
           }
 
-          const items = data.results.slice(0, 5);
+          // Filter suggestions based on department role if known
+          let items = data.results;
+          if (type === 'actor') {
+            items = items.filter(p => p.known_for_department === 'Acting' || p.known_for_department === 'Directing');
+          } else if (type === 'director') {
+            items = items.filter(p => p.known_for_department === 'Directing' || p.known_for_department === 'Writing' || p.known_for_department === 'Production');
+          }
+          if (items.length === 0) items = data.results;
+
+          items = items.slice(0, 5);
+
           suggestionsList.innerHTML = items.map(person => {
-            const img = person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://via.placeholder.com/28x38?text=?';
-            const knownFor = person.known_for_department || '';
+            const img = person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://via.placeholder.com/30x40?text=?';
+            const role = person.known_for_department || '';
             return `
-              <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${person.name}', ${person.id}, '${type}')">
+              <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${person.name.replace(/'/g, "\\'")}', ${person.id}, '${type}', '${sectionId}')">
                 <img src="${img}" alt="${person.name}">
                 <div>
                   <strong>${person.name}</strong>
-                  ${knownFor ? `<br><small style="color:var(--text-muted);">${knownFor}</small>` : ''}
+                  ${role ? `<br><small style="color:var(--text-muted);">${role}</small>` : ''}
                 </div>
               </div>
             `;
           }).join('');
 
           suggestionsList.style.display = 'block';
+          if (sectionElem) sectionElem.classList.add('active-dropdown');
         } catch (e) {
           suggestionsList.style.display = 'none';
+          if (sectionElem) sectionElem.classList.remove('active-dropdown');
         }
-      }, 300);
+      }, 250);
     }
 
-    function selectPerson(inputId, listId, name, personId, type) {
+    function selectPerson(inputId, listId, name, personId, type, sectionId) {
       document.getElementById(inputId).value = name;
       document.getElementById(listId).style.display = 'none';
+      const sectionElem = document.getElementById(sectionId);
+      if (sectionElem) sectionElem.classList.remove('active-dropdown');
+
       if (type === 'actor') selectedActorId = personId;
       if (type === 'director') selectedDirectorId = personId;
     }
@@ -533,6 +558,7 @@
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.autocomplete-wrapper')) {
         document.querySelectorAll('.suggestions-list').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.filter-section').forEach(el => el.classList.remove('active-dropdown'));
       }
     });
 
@@ -609,7 +635,7 @@
           `;
         }
       } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please verify your API key in line 286.</p>';
+        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please verify your API key on line 290.</p>';
       }
     }
   </script>
