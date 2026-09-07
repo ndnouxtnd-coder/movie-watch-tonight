@@ -130,13 +130,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
       user-select: none;
-      border-radius: 12px;
-    }
-
-    .filter-header:hover {
-      background-color: #374151;
+      border-radius: 12px 12px 0 0;
     }
 
     .filter-header h2 {
@@ -151,25 +146,12 @@
       font-size: 0.85rem;
     }
 
-    .filter-header .arrow {
-      color: var(--text-muted);
-      transition: transform 0.2s;
-    }
-
     .filter-content {
       padding: 1.25rem;
-      display: none;
+      display: block;
       border-top: 1px solid var(--border-color);
       position: relative;
       overflow: visible !important;
-    }
-
-    .filter-section.active .filter-content {
-      display: block;
-    }
-
-    .filter-section.active .filter-header .arrow {
-      transform: rotate(180deg);
     }
 
     /* BUBBLE GRIDS (GENRE & COUNTRY) */
@@ -389,10 +371,9 @@
     <div class="filters-horizontal">
       
       <!-- 1. GENRE -->
-      <div class="filter-section active">
-        <div class="filter-header" onclick="toggleSection(this)">
+      <div class="filter-section">
+        <div class="filter-header">
           <h2>1. Select Your Genre <span class="required-tag">(required)</span></h2>
-          <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
           <div class="bubble-grid">
@@ -433,10 +414,9 @@
       </div>
 
       <!-- 2. FAVORITE ACTOR -->
-      <div class="filter-section active" id="actorSection">
-        <div class="filter-header" onclick="toggleSection(this)">
+      <div class="filter-section" id="actorSection">
+        <div class="filter-header">
           <h2>2. Favorite Actor (optional)</h2>
-          <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
           <div class="autocomplete-wrapper">
@@ -447,10 +427,9 @@
       </div>
 
       <!-- 3. FAVORITE DIRECTOR -->
-      <div class="filter-section active" id="directorSection">
-        <div class="filter-header" onclick="toggleSection(this)">
+      <div class="filter-section" id="directorSection">
+        <div class="filter-header">
           <h2>3. Favorite Director (optional)</h2>
-          <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
           <div class="autocomplete-wrapper">
@@ -460,11 +439,10 @@
         </div>
       </div>
 
-      <!-- 4. COUNTRY / LANGUAGE (Bubbles Version) -->
-      <div class="filter-section active">
-        <div class="filter-header" onclick="toggleSection(this)">
+      <!-- 4. COUNTRY / LANGUAGE -->
+      <div class="filter-section">
+        <div class="filter-header">
           <h2>4. Country / Language (optional)</h2>
-          <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
           <div class="bubble-grid">
@@ -516,11 +494,6 @@
     let selectedDirectorId = null;
     let debounceTimer = null;
 
-    function toggleSection(header) {
-      const section = header.parentElement;
-      section.classList.toggle('active');
-    }
-
     // Generic function to allow only 1 bubble selection per category
     function selectSingleBubble(element, className) {
       const isAlreadySelected = element.classList.contains('selected');
@@ -534,7 +507,6 @@
         if (className === 'genre-bubble') selectedGenreId = element.getAttribute('data-genre-id');
         if (className === 'lang-bubble') selectedLangCode = element.getAttribute('data-lang-code');
       } else {
-        // Toggle off if clicked again
         if (className === 'genre-bubble') selectedGenreId = null;
         if (className === 'lang-bubble') selectedLangCode = null;
       }
@@ -699,7 +671,6 @@
       document.getElementById('proposalsHeading').innerText = "🎲 Your Surprise Pick!";
       container.innerHTML = '<p class="status-msg">Rolling the dice for a great movie...</p>';
 
-      // Randomize results between pages 1 to 5 from top rated high-vote pool
       const randomPage = Math.floor(Math.random() * 5) + 1;
       let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=500&page=${randomPage}`;
 
@@ -717,7 +688,6 @@
           return;
         }
 
-        // Pick 1 random movie from the fetched page
         const randomIndex = Math.floor(Math.random() * data.results.length);
         renderCards([data.results[randomIndex]]);
       } catch (err) {
