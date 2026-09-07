@@ -128,18 +128,19 @@
       border-top: 1px solid var(--border-color);
     }
 
-    .genre-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
-
+    /* Accordion Active State */
     .filter-section.active .filter-content {
       display: block;
     }
 
     .filter-section.active .filter-header .arrow {
       transform: rotate(180deg);
+    }
+
+    .genre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
     }
 
     .genre-bubble {
@@ -154,6 +155,7 @@
       transition: all 0.2s;
       min-height: 40px;
       box-sizing: border-box;
+      position: relative;
     }
 
     .genre-bubble .bubble-label {
@@ -175,6 +177,7 @@
       color: transparent;
     }
 
+    /* Selected Genre Bubble State */
     .genre-bubble.selected {
       background-color: var(--accent-orange);
       border-color: var(--accent-orange);
@@ -303,7 +306,7 @@
   <main>
     <aside class="sidebar">
       
-      <!-- 1. GENRE (Required) -->
+      <!-- 1. GENRE (Required, expanded by default) -->
       <div class="filter-section active">
         <div class="filter-header" onclick="toggleSection(this)">
           <h2>1. Select Your Genre <span class="required-tag">(required)</span></h2>
@@ -311,7 +314,7 @@
         </div>
         <div class="filter-content">
           <div class="genre-grid">
-            <div class="genre-bubble selected" data-genre-id="14" onclick="selectGenre(this)">
+            <div class="genre-bubble" data-genre-id="14" onclick="selectGenre(this)">
               <div class="bubble-label"><span>🦄</span> Fantasy</div>
               <div class="checkbox">&#10003;</div>
             </div>
@@ -392,22 +395,29 @@
     <section class="proposals">
       <h2 class="proposals-header">Top 3 Proposals</h2>
       <div id="gridContainer" class="grid-container">
-        <p class="status-msg">Select your preferences on the left and click "Find My Movie".</p>
+        <p class="status-msg">Select a genre on the left and click "Find My Movie".</p>
       </div>
     </section>
   </main>
 
   <script>
     const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; // Replace with your TMDb API Key
-    let selectedGenreId = "14"; // Default selected: Fantasy
+    let selectedGenreId = null; // Unselected by default
 
+    // Hide / Reveal Section Accordion
     function toggleSection(header) {
       const section = header.parentElement;
       section.classList.toggle('active');
     }
 
+    // Select single genre option
     function selectGenre(element) {
-      document.querySelectorAll('.genre-bubble').forEach(b => b.classList.remove('selected'));
+      // Unselect all other bubbles
+      document.querySelectorAll('.genre-bubble').forEach(bubble => {
+        bubble.classList.remove('selected');
+      });
+
+      // Highlight clicked bubble
       element.classList.add('selected');
       selectedGenreId = element.getAttribute('data-genre-id');
     }
@@ -425,6 +435,12 @@
 
     async function fetchTop3() {
       const container = document.getElementById('gridContainer');
+
+      if (!selectedGenreId) {
+        container.innerHTML = '<p class="status-msg" style="color: var(--accent-orange);">Please select a genre from Section 1 first!</p>';
+        return;
+      }
+
       container.innerHTML = '<p class="status-msg">Searching top-rated movies...</p>';
 
       const actorName = document.getElementById('actorInput').value.trim();
@@ -457,7 +473,6 @@
         container.innerHTML = '';
 
         for (const movie of top3) {
-          // Fetch credits for Director & Cast
           let director = "Unknown";
           let cast = "N/A";
 
@@ -499,7 +514,7 @@
           `;
         }
       } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please ensure your API key is correctly inserted into line 213.</p>';
+        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please ensure your API key is correctly inserted into line 219.</p>';
       }
     }
   </script>
