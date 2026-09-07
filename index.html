@@ -9,6 +9,7 @@
       --bg-color: #1a1e26;
       --card-bg: #2a313d;
       --accent-orange: #f59e0b;
+      --accent-purple: #8b5cf6;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: #3f4a5a;
@@ -55,11 +56,16 @@
       font-weight: bold;
     }
 
+    .btn-group {
+      display: flex;
+      gap: 0.75rem;
+    }
+
     .find-movie-btn {
       background-color: var(--accent-orange);
       color: #000;
       border: none;
-      padding: 0.75rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
@@ -68,6 +74,25 @@
 
     .find-movie-btn:hover {
       background-color: #d97706;
+      transform: translateY(-1px);
+    }
+
+    .surprise-btn {
+      background-color: var(--accent-purple);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .surprise-btn:hover {
+      background-color: #7c3aed;
       transform: translateY(-1px);
     }
 
@@ -82,7 +107,7 @@
     /* HORIZONTAL FILTERS GRID */
     .filters-horizontal {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1rem;
       align-items: start;
     }
@@ -92,13 +117,12 @@
       border-radius: 12px;
       background-color: var(--card-bg);
       position: relative;
-      /* FIX: allow suggestions menu to overflow section borders */
       overflow: visible !important;
       z-index: 10;
     }
 
     .filter-section.active-dropdown {
-      z-index: 100; /* Elevate active section above others */
+      z-index: 999 !important;
     }
 
     .filter-header {
@@ -148,14 +172,14 @@
       transform: rotate(180deg);
     }
 
-    /* GENRE BUBBLES */
-    .genre-grid {
+    /* BUBBLE GRIDS (GENRE & COUNTRY) */
+    .bubble-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.6rem;
     }
 
-    .genre-bubble {
+    .bubble-option {
       background-color: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
       border-radius: 30px;
@@ -169,14 +193,14 @@
       box-sizing: border-box;
     }
 
-    .genre-bubble .bubble-label {
+    .bubble-option .bubble-label {
       display: flex;
       align-items: center;
       gap: 0.35rem;
       font-size: 0.85rem;
     }
 
-    .genre-bubble .checkbox {
+    .bubble-option .checkbox {
       width: 14px;
       height: 14px;
       border: 1px solid var(--border-color);
@@ -188,14 +212,14 @@
       color: transparent;
     }
 
-    .genre-bubble.selected {
+    .bubble-option.selected {
       background-color: var(--accent-orange);
       border-color: var(--accent-orange);
       color: #000;
       font-weight: 600;
     }
 
-    .genre-bubble.selected .checkbox {
+    .bubble-option.selected .checkbox {
       border-color: #000;
       color: #000;
     }
@@ -206,7 +230,7 @@
       width: 100%;
     }
 
-    .optional-input, .optional-select {
+    .optional-input {
       width: 100%;
       padding: 0.75rem;
       background-color: rgba(0, 0, 0, 0.2);
@@ -218,7 +242,7 @@
       font-size: 0.95rem;
     }
 
-    .optional-input:focus, .optional-select:focus {
+    .optional-input:focus {
       border-color: var(--accent-orange);
     }
 
@@ -231,9 +255,9 @@
       border: 1px solid var(--accent-orange);
       border-radius: 8px;
       margin-top: 6px;
-      max-height: 220px;
+      max-height: 240px;
       overflow-y: auto;
-      z-index: 9999;
+      z-index: 10000;
       box-shadow: 0 10px 25px rgba(0,0,0,0.8);
       display: none;
     }
@@ -254,8 +278,8 @@
     }
 
     .suggestion-item img {
-      width: 30px;
-      height: 40px;
+      width: 32px;
+      height: 42px;
       object-fit: cover;
       border-radius: 4px;
       background-color: #0f172a;
@@ -354,7 +378,10 @@
   <header>
     <div class="header-content">
       <h1>What Movie to Watch <span>Tonight</span></h1>
-      <button class="find-movie-btn" onclick="fetchTop3()">Find My Movie</button>
+      <div class="btn-group">
+        <button class="surprise-btn" onclick="fetchSurpriseMovie()">🎲 Surprise Me!</button>
+        <button class="find-movie-btn" onclick="fetchTop3()">Find My Movie</button>
+      </div>
     </div>
   </header>
 
@@ -368,36 +395,36 @@
           <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
-          <div class="genre-grid">
-            <div class="genre-bubble" data-genre-id="14" onclick="selectGenre(this)">
+          <div class="bubble-grid">
+            <div class="bubble-option genre-bubble" data-genre-id="14" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>🦄</span> Fantasy</div>
               <div class="checkbox">&#10003;</div>
             </div>
-            <div class="genre-bubble" data-genre-id="35" onclick="selectGenre(this)">
+            <div class="bubble-option genre-bubble" data-genre-id="35" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>🤣</span> Comedy</div>
               <div class="checkbox">&#10003;</div>
             </div>
-            <div class="genre-bubble" data-genre-id="18" onclick="selectGenre(this)">
+            <div class="bubble-option genre-bubble" data-genre-id="18" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>😢</span> Drama</div>
               <div class="checkbox">&#10003;</div>
             </div>
-            <div class="genre-bubble" data-genre-id="878" onclick="selectGenre(this)">
+            <div class="bubble-option genre-bubble" data-genre-id="878" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>🚀</span> Sci-Fi</div>
               <div class="checkbox">&#10003;</div>
             </div>
-            <div class="genre-bubble" data-genre-id="28" onclick="selectGenre(this)">
+            <div class="bubble-option genre-bubble" data-genre-id="28" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>👊</span> Action</div>
               <div class="checkbox">&#10003;</div>
             </div>
-            <div class="genre-bubble" data-genre-id="27" onclick="selectGenre(this)">
+            <div class="bubble-option genre-bubble" data-genre-id="27" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>👻</span> Horror</div>
               <div class="checkbox">&#10003;</div>
             </div>
-            <div class="genre-bubble" data-genre-id="10749" onclick="selectGenre(this)">
+            <div class="bubble-option genre-bubble" data-genre-id="10749" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>💖</span> Romance</div>
               <div class="checkbox">&#10003;</div>
             </div>
-            <div class="genre-bubble" data-genre-id="53" onclick="selectGenre(this)">
+            <div class="bubble-option genre-bubble" data-genre-id="53" onclick="selectSingleBubble(this, 'genre-bubble')">
               <div class="bubble-label"><span>🤔</span> Thriller</div>
               <div class="checkbox">&#10003;</div>
             </div>
@@ -433,21 +460,39 @@
         </div>
       </div>
 
-      <!-- 4. COUNTRY / LANGUAGE -->
+      <!-- 4. COUNTRY / LANGUAGE (Bubbles Version) -->
       <div class="filter-section active">
         <div class="filter-header" onclick="toggleSection(this)">
           <h2>4. Country / Language (optional)</h2>
           <span class="arrow">&#9662;</span>
         </div>
         <div class="filter-content">
-          <select id="languageSelect" class="optional-select">
-            <option value="">All Languages / International</option>
-            <option value="ko">Korean (K-Cinema)</option>
-            <option value="ja">Japanese</option>
-            <option value="en">English</option>
-            <option value="fr">French</option>
-            <option value="es">Spanish</option>
-          </select>
+          <div class="bubble-grid">
+            <div class="bubble-option lang-bubble" data-lang-code="ko" onclick="selectSingleBubble(this, 'lang-bubble')">
+              <div class="bubble-label"><span>🇰🇷</span> Korean</div>
+              <div class="checkbox">&#10003;</div>
+            </div>
+            <div class="bubble-option lang-bubble" data-lang-code="ja" onclick="selectSingleBubble(this, 'lang-bubble')">
+              <div class="bubble-label"><span>🇯🇵</span> Japanese</div>
+              <div class="checkbox">&#10003;</div>
+            </div>
+            <div class="bubble-option lang-bubble" data-lang-code="en" onclick="selectSingleBubble(this, 'lang-bubble')">
+              <div class="bubble-label"><span>🇺🇸</span> English</div>
+              <div class="checkbox">&#10003;</div>
+            </div>
+            <div class="bubble-option lang-bubble" data-lang-code="fr" onclick="selectSingleBubble(this, 'lang-bubble')">
+              <div class="bubble-label"><span>🇫🇷</span> French</div>
+              <div class="checkbox">&#10003;</div>
+            </div>
+            <div class="bubble-option lang-bubble" data-lang-code="es" onclick="selectSingleBubble(this, 'lang-bubble')">
+              <div class="bubble-label"><span>🇪🇸</span> Spanish</div>
+              <div class="checkbox">&#10003;</div>
+            </div>
+            <div class="bubble-option lang-bubble" data-lang-code="it" onclick="selectSingleBubble(this, 'lang-bubble')">
+              <div class="bubble-label"><span>🇮🇹</span> Italian</div>
+              <div class="checkbox">&#10003;</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -455,16 +500,18 @@
 
     <!-- PROPOSALS SECTION -->
     <section class="proposals">
-      <h2 class="proposals-header">Top 3 Proposals</h2>
+      <h2 class="proposals-header" id="proposalsHeading">Top 3 Proposals</h2>
       <div id="gridContainer" class="grid-container">
-        <p class="status-msg">Select a genre above and click "Find My Movie".</p>
+        <p class="status-msg">Select a genre above and click "Find My Movie" or try "🎲 Surprise Me!".</p>
       </div>
     </section>
   </main>
 
   <script>
-    const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; // Replace with your valid TMDb API Key
+    const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; 
+    
     let selectedGenreId = null;
+    let selectedLangCode = null;
     let selectedActorId = null;
     let selectedDirectorId = null;
     let debounceTimer = null;
@@ -474,12 +521,23 @@
       section.classList.toggle('active');
     }
 
-    function selectGenre(element) {
-      document.querySelectorAll('.genre-bubble').forEach(bubble => {
+    // Generic function to allow only 1 bubble selection per category
+    function selectSingleBubble(element, className) {
+      const isAlreadySelected = element.classList.contains('selected');
+      
+      document.querySelectorAll('.' + className).forEach(bubble => {
         bubble.classList.remove('selected');
       });
-      element.classList.add('selected');
-      selectedGenreId = element.getAttribute('data-genre-id');
+
+      if (!isAlreadySelected) {
+        element.classList.add('selected');
+        if (className === 'genre-bubble') selectedGenreId = element.getAttribute('data-genre-id');
+        if (className === 'lang-bubble') selectedLangCode = element.getAttribute('data-lang-code');
+      } else {
+        // Toggle off if clicked again
+        if (className === 'genre-bubble') selectedGenreId = null;
+        if (className === 'lang-bubble') selectedLangCode = null;
+      }
     }
 
     // AUTOCOMPLETE FOR ACTOR & DIRECTOR
@@ -492,7 +550,6 @@
       if (type === 'actor') selectedActorId = null;
       if (type === 'director') selectedDirectorId = null;
 
-      // Single character trigger enables last-name search like "C" -> "Clooney"
       if (query.length < 1) {
         suggestionsList.style.display = 'none';
         if (sectionElem) sectionElem.classList.remove('active-dropdown');
@@ -502,6 +559,7 @@
       debounceTimer = setTimeout(async () => {
         try {
           const res = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`);
+          if (!res.ok) return;
           const data = await res.json();
 
           if (!data.results || data.results.length === 0) {
@@ -510,22 +568,14 @@
             return;
           }
 
-          // Filter suggestions based on department role if known
-          let items = data.results;
-          if (type === 'actor') {
-            items = items.filter(p => p.known_for_department === 'Acting' || p.known_for_department === 'Directing');
-          } else if (type === 'director') {
-            items = items.filter(p => p.known_for_department === 'Directing' || p.known_for_department === 'Writing' || p.known_for_department === 'Production');
-          }
-          if (items.length === 0) items = data.results;
-
-          items = items.slice(0, 5);
+          let items = data.results.slice(0, 5);
 
           suggestionsList.innerHTML = items.map(person => {
-            const img = person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://via.placeholder.com/30x40?text=?';
+            const img = person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://via.placeholder.com/32x42?text=?';
             const role = person.known_for_department || '';
+            const safeName = person.name.replace(/'/g, "\\'");
             return `
-              <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${person.name.replace(/'/g, "\\'")}', ${person.id}, '${type}', '${sectionId}')">
+              <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${safeName}', ${person.id}, '${type}', '${sectionId}')">
                 <img src="${img}" alt="${person.name}">
                 <div>
                   <strong>${person.name}</strong>
@@ -554,7 +604,6 @@
       if (type === 'director') selectedDirectorId = personId;
     }
 
-    // Close dropdowns when clicking outside
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.autocomplete-wrapper')) {
         document.querySelectorAll('.suggestions-list').forEach(el => el.style.display = 'none');
@@ -562,8 +611,58 @@
       }
     });
 
+    // BUILD CARDS
+    async function renderCards(movies) {
+      const container = document.getElementById('gridContainer');
+      container.innerHTML = '';
+
+      for (const movie of movies) {
+        let director = "Unknown";
+        let cast = "N/A";
+
+        try {
+          const creditsRes = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${TMDB_API_KEY}`);
+          const creditsData = await creditsRes.json();
+          
+          const dirObj = creditsData.crew ? creditsData.crew.find(c => c.job === 'Director') : null;
+          if (dirObj) director = dirObj.name;
+
+          if (creditsData.cast && creditsData.cast.length > 0) {
+            cast = creditsData.cast.slice(0, 2).map(c => c.name).join(', ') + '...';
+          }
+        } catch (e) {}
+
+        const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
+
+        container.innerHTML += `
+          <article class="movie-card">
+            <img src="${poster}" alt="${movie.title}">
+            <div class="movie-card-body">
+              <div>
+                <h3 class="movie-title">${movie.title}</h3>
+                <div class="movie-meta">
+                  Director: <span>${director}</span><br>
+                  Main cast: <span>${cast}</span>
+                </div>
+              </div>
+              <div>
+                <div class="movie-ratings">
+                  <span class="rating-badge imdb-badge">⭐ TMDb ${movie.vote_average.toFixed(1)}</span>
+                </div>
+                <div class="movie-meta" style="margin-top: 0.5rem; margin-bottom:0;">
+                  ${movie.overview ? movie.overview.substring(0, 100) + '...' : ''}
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+    }
+
+    // NORMAL SEARCH
     async function fetchTop3() {
       const container = document.getElementById('gridContainer');
+      document.getElementById('proposalsHeading').innerText = "Top 3 Proposals";
 
       if (!selectedGenreId) {
         container.innerHTML = '<p class="status-msg" style="color: var(--accent-orange);">Please select a genre from Section 1 first!</p>';
@@ -572,14 +671,12 @@
 
       container.innerHTML = '<p class="status-msg">Searching top-rated movies...</p>';
 
-      const language = document.getElementById('languageSelect').value;
-
       let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=300`;
 
       if (selectedGenreId) url += `&with_genres=${selectedGenreId}`;
       if (selectedActorId) url += `&with_cast=${selectedActorId}`;
       if (selectedDirectorId) url += `&with_crew=${selectedDirectorId}`;
-      if (language) url += `&with_original_language=${language}`;
+      if (selectedLangCode) url += `&with_original_language=${selectedLangCode}`;
 
       try {
         const response = await fetch(url);
@@ -590,52 +687,41 @@
           return;
         }
 
-        const top3 = data.results.slice(0, 3);
-        container.innerHTML = '';
-
-        for (const movie of top3) {
-          let director = "Unknown";
-          let cast = "N/A";
-
-          try {
-            const creditsRes = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${TMDB_API_KEY}`);
-            const creditsData = await creditsRes.json();
-            
-            const dirObj = creditsData.crew ? creditsData.crew.find(c => c.job === 'Director') : null;
-            if (dirObj) director = dirObj.name;
-
-            if (creditsData.cast && creditsData.cast.length > 0) {
-              cast = creditsData.cast.slice(0, 2).map(c => c.name).join(', ') + '...';
-            }
-          } catch (e) {}
-
-          const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
-
-          container.innerHTML += `
-            <article class="movie-card">
-              <img src="${poster}" alt="${movie.title}">
-              <div class="movie-card-body">
-                <div>
-                  <h3 class="movie-title">${movie.title}</h3>
-                  <div class="movie-meta">
-                    Director: <span>${director}</span><br>
-                    Main cast: <span>${cast}</span>
-                  </div>
-                </div>
-                <div>
-                  <div class="movie-ratings">
-                    <span class="rating-badge imdb-badge">⭐ TMDb ${movie.vote_average.toFixed(1)}</span>
-                  </div>
-                  <div class="movie-meta" style="margin-top: 0.5rem; margin-bottom:0;">
-                    ${movie.overview ? movie.overview.substring(0, 100) + '...' : ''}
-                  </div>
-                </div>
-              </div>
-            </article>
-          `;
-        }
+        renderCards(data.results.slice(0, 3));
       } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please verify your API key on line 290.</p>';
+        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please check your API key.</p>';
+      }
+    }
+
+    // SURPRISE ME RANDOMIZER
+    async function fetchSurpriseMovie() {
+      const container = document.getElementById('gridContainer');
+      document.getElementById('proposalsHeading').innerText = "🎲 Your Surprise Pick!";
+      container.innerHTML = '<p class="status-msg">Rolling the dice for a great movie...</p>';
+
+      // Randomize results between pages 1 to 5 from top rated high-vote pool
+      const randomPage = Math.floor(Math.random() * 5) + 1;
+      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=500&page=${randomPage}`;
+
+      if (selectedGenreId) url += `&with_genres=${selectedGenreId}`;
+      if (selectedActorId) url += `&with_cast=${selectedActorId}`;
+      if (selectedDirectorId) url += `&with_crew=${selectedDirectorId}`;
+      if (selectedLangCode) url += `&with_original_language=${selectedLangCode}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!data.results || data.results.length === 0) {
+          container.innerHTML = '<p class="status-msg">No surprise movies found with those active filters. Try unselecting some options!</p>';
+          return;
+        }
+
+        // Pick 1 random movie from the fetched page
+        const randomIndex = Math.floor(Math.random() * data.results.length);
+        renderCards([data.results[randomIndex]]);
+      } catch (err) {
+        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please check your API key.</p>';
       }
     }
   </script>
