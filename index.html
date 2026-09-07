@@ -185,8 +185,17 @@
     .bubble-option .bubble-label {
       display: flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.45rem;
       font-size: 0.85rem;
+    }
+
+    /* SVG FLAG IMAGE STYLING */
+    .flag-img {
+      width: 18px;
+      height: 13px;
+      object-fit: cover;
+      border-radius: 2px;
+      box-shadow: 0 0 2px rgba(0,0,0,0.5);
     }
 
     .bubble-option .checkbox {
@@ -464,7 +473,7 @@
         </div>
       </div>
 
-      <!-- 4. COUNTRY / LANGUAGE -->
+      <!-- 4. COUNTRY / LANGUAGE (Cross-Browser Flags) -->
       <div class="filter-section">
         <div class="filter-header">
           <h2>4. Country / Language (optional)</h2>
@@ -472,27 +481,31 @@
         <div class="filter-content">
           <div class="bubble-grid">
             <div class="bubble-option lang-bubble" data-lang-code="ko" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇰🇷</span> Korean</div>
+              <div class="bubble-label"><img src="https://flagcdn.com/w20/kr.png" alt="Korean Flag" class="flag-img"> Korean</div>
               <div class="checkbox">&#10003;</div>
             </div>
             <div class="bubble-option lang-bubble" data-lang-code="ja" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇯🇵</span> Japanese</div>
+              <div class="bubble-label"><img src="https://flagcdn.com/w20/jp.png" alt="Japanese Flag" class="flag-img"> Japanese</div>
               <div class="checkbox">&#10003;</div>
             </div>
             <div class="bubble-option lang-bubble" data-lang-code="en" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇺🇸</span> English</div>
+              <div class="bubble-label"><img src="https://flagcdn.com/w20/us.png" alt="English Flag" class="flag-img"> English</div>
               <div class="checkbox">&#10003;</div>
             </div>
             <div class="bubble-option lang-bubble" data-lang-code="fr" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇫🇷</span> French</div>
+              <div class="bubble-label"><img src="https://flagcdn.com/w20/fr.png" alt="French Flag" class="flag-img"> French</div>
+              <div class="checkbox">&#10003;</div>
+            </div>
+            <div class="bubble-option lang-bubble" data-lang-code="hi" onclick="selectSingleBubble(this, 'lang-bubble')">
+              <div class="bubble-label"><img src="https://flagcdn.com/w20/in.png" alt="Indian Flag" class="flag-img"> Indian</div>
               <div class="checkbox">&#10003;</div>
             </div>
             <div class="bubble-option lang-bubble" data-lang-code="es" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇪🇸</span> Spanish</div>
+              <div class="bubble-label"><img src="https://flagcdn.com/w20/es.png" alt="Spanish Flag" class="flag-img"> Spanish</div>
               <div class="checkbox">&#10003;</div>
             </div>
             <div class="bubble-option lang-bubble" data-lang-code="it" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇮🇹</span> Italian</div>
+              <div class="bubble-label"><img src="https://flagcdn.com/w20/it.png" alt="Italian Flag" class="flag-img"> Italian</div>
               <div class="checkbox">&#10003;</div>
             </div>
           </div>
