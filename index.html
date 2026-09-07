@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>What Movie to Watch Tonight - Top 3 Proposals</title>
+  <title>Privacy Policy - What Movie to Watch Tonight</title>
   <style>
     :root {
       --bg-color: #1a1e26;
       --card-bg: #2a313d;
       --accent-orange: #f59e0b;
-      --accent-purple: #8b5cf6;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: #3f4a5a;
@@ -39,7 +38,7 @@
 
     .header-content {
       width: 90%;
-      max-width: 1400px;
+      max-width: 1000px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -51,307 +50,46 @@
       color: var(--text-main);
     }
 
+    header h1 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     header h1 span {
       color: var(--accent-orange);
       font-weight: bold;
     }
 
-    .btn-group {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .find-movie-btn {
-      background-color: var(--accent-orange);
-      color: #000;
-      border: none;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
-
-    .find-movie-btn:hover {
-      background-color: #d97706;
-      transform: translateY(-1px);
-    }
-
-    .surprise-btn {
-      background-color: var(--accent-purple);
-      color: #fff;
-      border: none;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .surprise-btn:hover {
-      background-color: #7c3aed;
-      transform: translateY(-1px);
-    }
-
     main {
       width: 90%;
-      max-width: 1400px;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    /* HORIZONTAL FILTERS GRID */
-    .filters-horizontal {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-      align-items: start;
-    }
-
-    .filter-section {
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+      max-width: 1000px;
       background-color: var(--card-bg);
-      position: relative;
-      overflow: visible !important;
-      z-index: 10;
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      line-height: 1.6;
     }
 
-    .filter-section.active-dropdown {
-      z-index: 999 !important;
-    }
-
-    .filter-header {
-      padding: 1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-      border-radius: 12px 12px 0 0;
-    }
-
-    .filter-header h2 {
-      margin: 0;
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-
-    .filter-header .required-tag {
+    h2 {
       color: var(--accent-orange);
-      font-weight: normal;
-      font-size: 0.85rem;
+      margin-top: 1.5rem;
     }
 
-    .filter-content {
-      padding: 1.25rem;
-      display: block;
-      border-top: 1px solid var(--border-color);
-      position: relative;
-      overflow: visible !important;
+    a {
+      color: var(--accent-orange);
     }
 
-    /* BUBBLE GRIDS (GENRE & COUNTRY) */
-    .bubble-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
-
-    .bubble-option {
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
-      border-radius: 30px;
-      padding: 0.4rem 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: all 0.2s;
-      min-height: 38px;
-      box-sizing: border-box;
-    }
-
-    .bubble-option .bubble-label {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.85rem;
-    }
-
-    .bubble-option .checkbox {
-      width: 14px;
-      height: 14px;
-      border: 1px solid var(--border-color);
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: transparent;
-    }
-
-    .bubble-option.selected {
-      background-color: var(--accent-orange);
-      border-color: var(--accent-orange);
-      color: #000;
-      font-weight: 600;
-    }
-
-    .bubble-option.selected .checkbox {
-      border-color: #000;
-      color: #000;
-    }
-
-    /* AUTOCOMPLETE DROPDOWNS */
-    .autocomplete-wrapper {
-      position: relative;
-      width: 100%;
-    }
-
-    .optional-input {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: rgba(0, 0, 0, 0.2);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-main);
-      outline: none;
-      box-sizing: border-box;
-      font-size: 0.95rem;
-    }
-
-    .optional-input:focus {
-      border-color: var(--accent-orange);
-    }
-
-    .suggestions-list {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: #1e293b;
-      border: 1px solid var(--accent-orange);
-      border-radius: 8px;
-      margin-top: 6px;
-      max-height: 240px;
-      overflow-y: auto;
-      z-index: 10000;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-      display: none;
-    }
-
-    .suggestion-item {
-      padding: 0.6rem 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .suggestion-item:hover {
-      background-color: var(--accent-orange);
-      color: #000;
-    }
-
-    .suggestion-item img {
-      width: 32px;
-      height: 42px;
-      object-fit: cover;
-      border-radius: 4px;
-      background-color: #0f172a;
-    }
-
-    /* PROPOSALS SECTION */
-    .proposals {
-      width: 100%;
-    }
-
-    .proposals-header {
-      font-size: 1.3rem;
-      margin-bottom: 1.5rem;
-      margin-top: 0;
-    }
-
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .movie-card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-      transition: transform 0.2s;
-    }
-
-    .movie-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .movie-card img {
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
-      background-color: #111;
-    }
-
-    .movie-card-body {
-      padding: 1.25rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .movie-title {
-      margin: 0;
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .movie-meta {
+    footer {
+      margin-top: auto;
+      padding-top: 2rem;
       color: var(--text-muted);
       font-size: 0.85rem;
-      margin-bottom: 1rem;
-      line-height: 1.4;
-    }
-
-    .movie-meta span {
-      color: var(--text-main);
-    }
-
-    .movie-ratings {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .rating-badge {
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      font-weight: bold;
-    }
-
-    .imdb-badge { color: #f5c518; }
-
-    .status-msg {
-      grid-column: 1 / -1;
       text-align: center;
+    }
+
+    footer a {
       color: var(--text-muted);
-      padding: 3rem 0;
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -359,341 +97,41 @@
 
   <header>
     <div class="header-content">
-      <h1>What Movie to Watch <span>Tonight</span></h1>
-      <div class="btn-group">
-        <button class="surprise-btn" onclick="fetchSurpriseMovie()">🎲 Surprise Me!</button>
-        <button class="find-movie-btn" onclick="fetchTop3()">Find My Movie</button>
-      </div>
+      <h1><a href="/">What Movie to Watch <span>Tonight</span></a></h1>
     </div>
   </header>
 
   <main>
-    <div class="filters-horizontal">
-      
-      <!-- 1. GENRE -->
-      <div class="filter-section">
-        <div class="filter-header">
-          <h2>1. Select Your Genre <span class="required-tag">(required)</span></h2>
-        </div>
-        <div class="filter-content">
-          <div class="bubble-grid">
-            <div class="bubble-option genre-bubble" data-genre-id="14" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>🦄</span> Fantasy</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option genre-bubble" data-genre-id="35" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>🤣</span> Comedy</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option genre-bubble" data-genre-id="18" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>😢</span> Drama</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option genre-bubble" data-genre-id="878" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>🚀</span> Sci-Fi</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option genre-bubble" data-genre-id="28" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>👊</span> Action</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option genre-bubble" data-genre-id="27" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>👻</span> Horror</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option genre-bubble" data-genre-id="10749" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>💖</span> Romance</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option genre-bubble" data-genre-id="53" onclick="selectSingleBubble(this, 'genre-bubble')">
-              <div class="bubble-label"><span>🤔</span> Thriller</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: September 2026</p>
 
-      <!-- 2. FAVORITE ACTOR -->
-      <div class="filter-section" id="actorSection">
-        <div class="filter-header">
-          <h2>2. Favorite Actor (optional)</h2>
-        </div>
-        <div class="filter-content">
-          <div class="autocomplete-wrapper">
-            <input type="text" id="actorInput" placeholder="e.g. George Clooney or Clooney" class="optional-input" autocomplete="off" oninput="handleAutocomplete('actorInput', 'actorSuggestions', 'actor', 'actorSection')">
-            <div id="actorSuggestions" class="suggestions-list"></div>
-          </div>
-        </div>
-      </div>
+    <p>At <strong>What Movie to Watch Tonight</strong> (moviewatchtonight.com), your privacy is important to us. This Privacy Policy document outlines the types of personal information that is received and collected by moviewatchtonight.com and how it is used.</p>
 
-      <!-- 3. FAVORITE DIRECTOR -->
-      <div class="filter-section" id="directorSection">
-        <div class="filter-header">
-          <h2>3. Favorite Director (optional)</h2>
-        </div>
-        <div class="filter-content">
-          <div class="autocomplete-wrapper">
-            <input type="text" id="directorInput" placeholder="e.g. Christopher Nolan or Nolan" class="optional-input" autocomplete="off" oninput="handleAutocomplete('directorInput', 'directorSuggestions', 'director', 'directorSection')">
-            <div id="directorSuggestions" class="suggestions-list"></div>
-          </div>
-        </div>
-      </div>
+    <h2>Log Files</h2>
+    <p>Like many other Web sites, moviewatchtonight.com makes use of log files. The information inside the log files includes internet protocol ( IP ) addresses, type of browser, Internet Service Provider ( ISP ), date/time stamp, referring/exit pages, and number of clicks to analyze trends, administer the site, track user’s movement around the site, and gather demographic information.</p>
 
-      <!-- 4. COUNTRY / LANGUAGE -->
-      <div class="filter-section">
-        <div class="filter-header">
-          <h2>4. Country / Language (optional)</h2>
-        </div>
-        <div class="filter-content">
-          <div class="bubble-grid">
-            <div class="bubble-option lang-bubble" data-lang-code="ko" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇰🇷</span> Korean</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option lang-bubble" data-lang-code="ja" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇯🇵</span> Japanese</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option lang-bubble" data-lang-code="en" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇺🇸</span> English</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option lang-bubble" data-lang-code="fr" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇫🇷</span> French</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option lang-bubble" data-lang-code="es" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇪🇸</span> Spanish</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-            <div class="bubble-option lang-bubble" data-lang-code="it" onclick="selectSingleBubble(this, 'lang-bubble')">
-              <div class="bubble-label"><span>🇮🇹</span> Italian</div>
-              <div class="checkbox">&#10003;</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <h2>Cookies and Web Beacons</h2>
+    <p>moviewatchtonight.com does use cookies to store information about visitors preferences, record user-specific information on which pages the user access or visit, customize Web page content based on visitors browser type or other information that the visitor sends via their browser.</p>
 
-    </div>
+    <h2>Google DoubleClick DART Cookie</h2>
+    <ul>
+      <li>Google, as a third party vendor, uses cookies to serve ads on moviewatchtonight.com.</li>
+      <li>Google's use of the DART cookie enables it to serve ads to users based on their visit to moviewatchtonight.com and other sites on the Internet.</li>
+      <li>Users may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy at the following URL: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">https://policies.google.com/technologies/ads</a></li>
+    </ul>
 
-    <!-- PROPOSALS SECTION -->
-    <section class="proposals">
-      <h2 class="proposals-header" id="proposalsHeading">Top 3 Proposals</h2>
-      <div id="gridContainer" class="grid-container">
-        <p class="status-msg">Select a genre above and click "Find My Movie" or try "🎲 Surprise Me!".</p>
-      </div>
-    </section>
+    <h2>Third-Party Advertising Partners</h2>
+    <p>Some of our advertising partners may use cookies and web beacons on our site. Our advertising partners include Google AdSense.</p>
+    <p>These third-party ad servers or ad networks use technology to the advertisements and links that appear on moviewatchtonight.com send directly to your browsers. They automatically receive your IP address when this occurs. Other technologies ( such as cookies, JavaScript, or Web Beacons ) may also be used by the third-party ad networks to measure the effectiveness of their advertisements and / or to personalize the advertising content that you see.</p>
+    <p>moviewatchtonight.com has no access to or control over these cookies that are used by third-party advertisers.</p>
+
+    <h2>Consent</h2>
+    <p>By using our website, you hereby consent to our privacy policy and agree to its terms.</p>
   </main>
 
-  <script>
-    const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; 
-    
-    let selectedGenreId = null;
-    let selectedLangCode = null;
-    let selectedActorId = null;
-    let selectedDirectorId = null;
-    let debounceTimer = null;
+  <footer>
+    <p>&copy; 2026 What Movie to Watch Tonight | <a href="/">Home</a> | <a href="/privacy.html">Privacy Policy</a></p>
+  </footer>
 
-    // Generic function to allow only 1 bubble selection per category
-    function selectSingleBubble(element, className) {
-      const isAlreadySelected = element.classList.contains('selected');
-      
-      document.querySelectorAll('.' + className).forEach(bubble => {
-        bubble.classList.remove('selected');
-      });
-
-      if (!isAlreadySelected) {
-        element.classList.add('selected');
-        if (className === 'genre-bubble') selectedGenreId = element.getAttribute('data-genre-id');
-        if (className === 'lang-bubble') selectedLangCode = element.getAttribute('data-lang-code');
-      } else {
-        if (className === 'genre-bubble') selectedGenreId = null;
-        if (className === 'lang-bubble') selectedLangCode = null;
-      }
-    }
-
-    // AUTOCOMPLETE FOR ACTOR & DIRECTOR
-    function handleAutocomplete(inputId, listId, type, sectionId) {
-      clearTimeout(debounceTimer);
-      const query = document.getElementById(inputId).value.trim();
-      const suggestionsList = document.getElementById(listId);
-      const sectionElem = document.getElementById(sectionId);
-
-      if (type === 'actor') selectedActorId = null;
-      if (type === 'director') selectedDirectorId = null;
-
-      if (query.length < 1) {
-        suggestionsList.style.display = 'none';
-        if (sectionElem) sectionElem.classList.remove('active-dropdown');
-        return;
-      }
-
-      debounceTimer = setTimeout(async () => {
-        try {
-          const res = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`);
-          if (!res.ok) return;
-          const data = await res.json();
-
-          if (!data.results || data.results.length === 0) {
-            suggestionsList.style.display = 'none';
-            if (sectionElem) sectionElem.classList.remove('active-dropdown');
-            return;
-          }
-
-          let items = data.results.slice(0, 5);
-
-          suggestionsList.innerHTML = items.map(person => {
-            const img = person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://via.placeholder.com/32x42?text=?';
-            const role = person.known_for_department || '';
-            const safeName = person.name.replace(/'/g, "\\'");
-            return `
-              <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${safeName}', ${person.id}, '${type}', '${sectionId}')">
-                <img src="${img}" alt="${person.name}">
-                <div>
-                  <strong>${person.name}</strong>
-                  ${role ? `<br><small style="color:var(--text-muted);">${role}</small>` : ''}
-                </div>
-              </div>
-            `;
-          }).join('');
-
-          suggestionsList.style.display = 'block';
-          if (sectionElem) sectionElem.classList.add('active-dropdown');
-        } catch (e) {
-          suggestionsList.style.display = 'none';
-          if (sectionElem) sectionElem.classList.remove('active-dropdown');
-        }
-      }, 250);
-    }
-
-    function selectPerson(inputId, listId, name, personId, type, sectionId) {
-      document.getElementById(inputId).value = name;
-      document.getElementById(listId).style.display = 'none';
-      const sectionElem = document.getElementById(sectionId);
-      if (sectionElem) sectionElem.classList.remove('active-dropdown');
-
-      if (type === 'actor') selectedActorId = personId;
-      if (type === 'director') selectedDirectorId = personId;
-    }
-
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.autocomplete-wrapper')) {
-        document.querySelectorAll('.suggestions-list').forEach(el => el.style.display = 'none');
-        document.querySelectorAll('.filter-section').forEach(el => el.classList.remove('active-dropdown'));
-      }
-    });
-
-    // BUILD CARDS
-    async function renderCards(movies) {
-      const container = document.getElementById('gridContainer');
-      container.innerHTML = '';
-
-      for (const movie of movies) {
-        let director = "Unknown";
-        let cast = "N/A";
-
-        try {
-          const creditsRes = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${TMDB_API_KEY}`);
-          const creditsData = await creditsRes.json();
-          
-          const dirObj = creditsData.crew ? creditsData.crew.find(c => c.job === 'Director') : null;
-          if (dirObj) director = dirObj.name;
-
-          if (creditsData.cast && creditsData.cast.length > 0) {
-            cast = creditsData.cast.slice(0, 2).map(c => c.name).join(', ') + '...';
-          }
-        } catch (e) {}
-
-        const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
-
-        container.innerHTML += `
-          <article class="movie-card">
-            <img src="${poster}" alt="${movie.title}">
-            <div class="movie-card-body">
-              <div>
-                <h3 class="movie-title">${movie.title}</h3>
-                <div class="movie-meta">
-                  Director: <span>${director}</span><br>
-                  Main cast: <span>${cast}</span>
-                </div>
-              </div>
-              <div>
-                <div class="movie-ratings">
-                  <span class="rating-badge imdb-badge">⭐ TMDb ${movie.vote_average.toFixed(1)}</span>
-                </div>
-                <div class="movie-meta" style="margin-top: 0.5rem; margin-bottom:0;">
-                  ${movie.overview ? movie.overview.substring(0, 100) + '...' : ''}
-                </div>
-              </div>
-            </div>
-          </article>
-        `;
-      }
-    }
-
-    // NORMAL SEARCH
-    async function fetchTop3() {
-      const container = document.getElementById('gridContainer');
-      document.getElementById('proposalsHeading').innerText = "Top 3 Proposals";
-
-      if (!selectedGenreId) {
-        container.innerHTML = '<p class="status-msg" style="color: var(--accent-orange);">Please select a genre from Section 1 first!</p>';
-        return;
-      }
-
-      container.innerHTML = '<p class="status-msg">Searching top-rated movies...</p>';
-
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=300`;
-
-      if (selectedGenreId) url += `&with_genres=${selectedGenreId}`;
-      if (selectedActorId) url += `&with_cast=${selectedActorId}`;
-      if (selectedDirectorId) url += `&with_crew=${selectedDirectorId}`;
-      if (selectedLangCode) url += `&with_original_language=${selectedLangCode}`;
-
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!data.results || data.results.length === 0) {
-          container.innerHTML = '<p class="status-msg">No top-rated movies found matching your exact criteria. Try broadening your filters!</p>';
-          return;
-        }
-
-        renderCards(data.results.slice(0, 3));
-      } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please check your API key.</p>';
-      }
-    }
-
-    // SURPRISE ME RANDOMIZER
-    async function fetchSurpriseMovie() {
-      const container = document.getElementById('gridContainer');
-      document.getElementById('proposalsHeading').innerText = "🎲 Your Surprise Pick!";
-      container.innerHTML = '<p class="status-msg">Rolling the dice for a great movie...</p>';
-
-      const randomPage = Math.floor(Math.random() * 5) + 1;
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=500&page=${randomPage}`;
-
-      if (selectedGenreId) url += `&with_genres=${selectedGenreId}`;
-      if (selectedActorId) url += `&with_cast=${selectedActorId}`;
-      if (selectedDirectorId) url += `&with_crew=${selectedDirectorId}`;
-      if (selectedLangCode) url += `&with_original_language=${selectedLangCode}`;
-
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!data.results || data.results.length === 0) {
-          container.innerHTML = '<p class="status-msg">No surprise movies found with those active filters. Try unselecting some options!</p>';
-          return;
-        }
-
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        renderCards([data.results[randomIndex]]);
-      } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please check your API key.</p>';
-      }
-    }
-  </script>
 </body>
 </html>
