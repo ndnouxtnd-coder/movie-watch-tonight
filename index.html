@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>What Movie to Watch Tonight - Top 3 Proposals</title>
+  <title>What Movie to Watch Tonight - Top Movie & Series Recommendations</title>
+  <meta name="description" content="Discover what movie or series to watch tonight. Filter by genre, actor, director, and language, or use our Surprise Me button for instant random movie recommendations." />
   <style>
     :root {
       --bg-color: #1a1e26;
@@ -34,7 +35,7 @@
       display: flex;
       justify-content: center;
       border-bottom: 1px solid var(--border-color);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .header-content {
@@ -57,13 +58,50 @@
       font-weight: bold;
     }
 
+    main {
+      width: 90%;
+      max-width: 1400px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* SEO HERO BLOCK ABOVE FILTERS */
+    .seo-intro-block {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      line-height: 1.6;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .seo-intro-block h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .seo-intro-block p {
+      margin: 0.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .seo-intro-block strong {
+      color: var(--accent-orange);
+    }
+
     /* CENTERED BUTTON SECTION */
     .action-buttons-container {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 1.25rem;
-      margin: 1.5rem 0 0.5rem 0;
+      margin: 1rem 0 0.5rem 0;
     }
 
     .find-movie-btn {
@@ -101,14 +139,6 @@
     .surprise-btn:hover {
       background-color: #7c3aed;
       transform: translateY(-2px);
-    }
-
-    main {
-      width: 90%;
-      max-width: 1400px;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
     }
 
     /* HORIZONTAL FILTERS GRID */
@@ -189,7 +219,6 @@
       font-size: 0.85rem;
     }
 
-    /* SVG FLAG IMAGE STYLING */
     .flag-img {
       width: 18px;
       height: 13px;
@@ -401,6 +430,17 @@
   </header>
 
   <main>
+    <!-- SEO INTRO / HERO BLOCK RIGHT ABOVE FILTERS -->
+    <section class="seo-intro-block">
+      <h2>Find Your Next Great Watch Instantly</h2>
+      <p>
+        Are you relaxing in the comfort of your own home and don't know what movie or series to watch tonight? Are you expecting company and having trouble selecting a film that everyone will enjoy? <strong>"What Movie to Watch Tonight"</strong> is here to help! Discover the best movie and TV show recommendations tailored specifically for you and your guests.
+      </p>
+      <p>
+        Just select a Genre, your Favorite Actor, Director, or Country/Language, and you're set to go. Alternatively, customize any option and press the <strong>"Surprise Me!"</strong> button for an instant random recommendation. You can select <em>"Action"</em> and <em>"Surprise Me!"</em> to get an exciting random movie or series proposal for tonight!
+      </p>
+    </section>
+
     <!-- FILTERS HORIZONTAL -->
     <div class="filters-horizontal">
       
@@ -473,7 +513,7 @@
         </div>
       </div>
 
-      <!-- 4. COUNTRY / LANGUAGE (Cross-Browser Flags) -->
+      <!-- 4. COUNTRY / LANGUAGE -->
       <div class="filter-section">
         <div class="filter-header">
           <h2>4. Country / Language (optional)</h2>
