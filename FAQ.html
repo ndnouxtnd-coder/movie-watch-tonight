@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frequently Asked Questions (FAQ) - What Movie to Watch Tonight</title>
+  <meta name="description" content="Answers to common questions about how What Movie to Watch Tonight picks movie recommendations, calculates ratings, and uses the Surprise Me generator." />
+  <link rel="canonical" href="https://moviewatchtonight.com/faq.html" />
+
+  <!-- FAQ Structured Data (JSON-LD) for Google Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does What Movie to Watch Tonight pick top movies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our algorithm filters verified user and critic ratings, requiring a minimum vote threshold to ensure you only get high-quality, highly rated movie proposals."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this movie recommendation tool completely free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, What Movie to Watch Tonight is 100% free to use with no registration or subscription required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the 'Surprise Me!' button work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Surprise Me button rolls a dice across top-rated films. If you have selected a genre or language, it picks a random top-rated movie matching those active filters."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg-color: #1a1e26;
+      --card-bg: #2a313d;
+      --accent-orange: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #3f4a5a;
+      --font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding-bottom: 3rem;
+    }
+
+    header {
+      width: 100%;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+
+    .header-content {
+      width: 90%;
+      max-width: 900px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--text-main);
+    }
+
+    header h1 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header h1 span {
+      color: var(--accent-orange);
+      font-weight: bold;
+    }
+
+    main {
+      width: 90%;
+      max-width: 900px;
+      background-color: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      line-height: 1.7;
+    }
+
+    h1 { margin-top: 0; color: var(--accent-orange); }
+
+    .faq-item {
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      font-size: 1.1rem;
+      color: var(--text-main);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-answer {
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    footer {
+      margin-top: auto;
+      padding-top: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    footer nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    footer a {
+      color: var(--accent-orange);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1><a href="/">What Movie to Watch <span>Tonight</span></a></h1>
+    </div>
+  </header>
+
+  <main>
+    <h1>Frequently Asked Questions</h1>
+
+    <div class="faq-item">
+      <div class="faq-question">1. How does What Movie to Watch Tonight select recommendations?</div>
+      <p class="faq-answer">Our system queries thousands of film records and filters results based on community ratings and popularity thresholds. When you pick a genre, actor, director, or language, we return the top 3 highest-rated movies matching your exact combination.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">2. Is this recommendation tool free to use?</div>
+      <p class="faq-answer">Yes, our website is 100% free with no account creation, subscription, or paywalls required.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">3. How does the "Surprise Me!" randomizer button work?</div>
+      <p class="faq-answer">The Surprise Me button selects a single top-rated movie at random from our high-rating pool. If you have any active genre, actor, or language filters selected, it will randomly pick a movie that fits those specific criteria.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">4. Why are some obscure movies filtered out?</div>
+      <p class="faq-answer">To ensure high recommendation quality, our tool sets a minimum threshold of audience ratings (300+ verified votes). This prevents unrated home videos or low-quality releases from diluting your movie night selection.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">5. Can I use this tool on my smartphone or tablet?</div>
+      <p class="faq-answer">Yes! What Movie to Watch Tonight is fully responsive and optimized to work fast across mobile phones, tablets, laptops, and desktop computers.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 What Movie to Watch Tonight. All rights reserved.</p>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/about.html">About Us</a>
+      <a href="/faq.html">FAQ</a>
+    </nav>
+  </footer>
+
+</body>
+</html>
