@@ -4,7 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>What Movie to Watch Tonight - Top Movie & Series Recommendations</title>
-  <meta name="description" content="Discover what movie or series to watch tonight. Filter by genre, actor, director, and language, or use our Surprise Me button for instant random movie recommendations." />
+  <meta name="description" content="Discover what movie or series to watch tonight in 3 simple clicks. Filter by genre, favorite actor, director, and language, or try our Surprise Me randomizer generator." />
+  <link rel="canonical" href="https://moviewatchtonight.com/" />
+
+  <!-- Structured Data (JSON-LD) for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "What Movie to Watch Tonight",
+    "url": "https://moviewatchtonight.com",
+    "description": "Interactive movie recommendation generator. Filter by genre, actor, director, or language to discover the best movies and TV series to watch tonight.",
+    "applicationCategory": "EntertainmentApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
   <style>
     :root {
       --bg-color: #1a1e26;
@@ -53,6 +73,11 @@
       color: var(--text-main);
     }
 
+    header h1 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     header h1 span {
       color: var(--accent-orange);
       font-weight: bold;
@@ -98,10 +123,18 @@
     /* CENTERED BUTTON SECTION */
     .action-buttons-container {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1rem 0 0.5rem 0;
+    }
+
+    .button-group {
+      display: flex;
       justify-content: center;
       align-items: center;
       gap: 1.25rem;
-      margin: 1rem 0 0.5rem 0;
+      flex-wrap: wrap;
     }
 
     .find-movie-btn {
@@ -139,6 +172,18 @@
     .surprise-btn:hover {
       background-color: #7c3aed;
       transform: translateY(-2px);
+    }
+
+    .reset-link {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .reset-link:hover {
+      color: var(--accent-orange);
     }
 
     /* HORIZONTAL FILTERS GRID */
@@ -337,6 +382,7 @@
       flex-direction: column;
       box-shadow: 0 4px 15px rgba(0,0,0,0.25);
       transition: transform 0.2s;
+      position: relative;
     }
 
     .movie-card:hover {
@@ -348,6 +394,19 @@
       height: 380px;
       object-fit: cover;
       background-color: #111;
+    }
+
+    .year-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: rgba(0, 0, 0, 0.75);
+      color: var(--accent-orange);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      backdrop-filter: blur(4px);
     }
 
     .movie-card-body {
@@ -376,10 +435,11 @@
       color: var(--text-main);
     }
 
-    .movie-ratings {
+    .card-footer-row {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
     }
 
     .rating-badge {
@@ -388,9 +448,25 @@
       align-items: center;
       gap: 0.25rem;
       font-weight: bold;
+      color: #f5c518;
     }
 
-    .imdb-badge { color: #f5c518; }
+    .copy-btn {
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover {
+      background-color: var(--accent-orange);
+      color: #000;
+      border-color: var(--accent-orange);
+    }
 
     .status-msg {
       grid-column: 1 / -1;
@@ -410,6 +486,14 @@
       font-size: 0.85rem;
     }
 
+    footer nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
     footer a {
       color: var(--accent-orange);
       text-decoration: none;
@@ -425,12 +509,12 @@
   <!-- CENTERED HEADER -->
   <header>
     <div class="header-content">
-      <h1>What Movie to Watch <span>Tonight</span></h1>
+      <h1><a href="/">What Movie to Watch <span>Tonight</span></a></h1>
     </div>
   </header>
 
   <main>
-    <!-- SEO INTRO / HERO BLOCK RIGHT ABOVE FILTERS -->
+    <!-- SEO INTRO BLOCK -->
     <section class="seo-intro-block">
       <h2>Find Your Next Great Watch Instantly</h2>
       <p>
@@ -554,10 +638,13 @@
 
     </div>
 
-    <!-- CENTERED ACTION BUTTONS IN THE MIDDLE OF THE PAGE -->
+    <!-- CENTERED ACTION BUTTONS -->
     <div class="action-buttons-container">
-      <button class="find-movie-btn" onclick="fetchTop3()">Find My Movie</button>
-      <button class="surprise-btn" onclick="fetchSurpriseMovie()">🎲 Surprise Me!</button>
+      <div class="button-group">
+        <button class="find-movie-btn" onclick="fetchTop3()">Find My Movie</button>
+        <button class="surprise-btn" onclick="fetchSurpriseMovie()">🎲 Surprise Me!</button>
+      </div>
+      <span class="reset-link" onclick="resetAllFilters()">Clear All Filters</span>
     </div>
 
     <!-- PROPOSALS SECTION -->
@@ -569,9 +656,15 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- FOOTER WITH ALL COMPLIANCE LINKS -->
   <footer>
-    <p>&copy; 2026 What Movie to Watch Tonight | <a href="/privacy.html">Privacy Policy</a></p>
+    <p>&copy; 2026 What Movie to Watch Tonight. All rights reserved.</p>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/about.html">About Us</a>
+      <a href="/faq.html">FAQ</a>
+    </nav>
   </footer>
 
   <script>
@@ -598,6 +691,19 @@
         if (className === 'genre-bubble') selectedGenreId = null;
         if (className === 'lang-bubble') selectedLangCode = null;
       }
+    }
+
+    function resetAllFilters() {
+      selectedGenreId = null;
+      selectedLangCode = null;
+      selectedActorId = null;
+      selectedDirectorId = null;
+
+      document.querySelectorAll('.bubble-option').forEach(b => b.classList.remove('selected'));
+      document.getElementById('actorInput').value = '';
+      document.getElementById('directorInput').value = '';
+      document.getElementById('proposalsHeading').innerText = "Top 3 Proposals";
+      document.getElementById('gridContainer').innerHTML = '<p class="status-msg">Filters cleared! Select a genre above to get started.</p>';
     }
 
     function handleAutocomplete(inputId, listId, type, sectionId) {
@@ -670,6 +776,13 @@
       }
     });
 
+    function copyToClipboard(text, btn) {
+      navigator.clipboard.writeText(text);
+      const originalText = btn.innerText;
+      btn.innerText = "Copied!";
+      setTimeout(() => { btn.innerText = originalText; }, 1500);
+    }
+
     async function renderCards(movies) {
       const container = document.getElementById('gridContainer');
       container.innerHTML = '';
@@ -691,9 +804,12 @@
         } catch (e) {}
 
         const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
+        const year = movie.release_date ? movie.release_date.substring(0, 4) : 'N/A';
+        const safeTitle = movie.title.replace(/'/g, "\\'");
 
         container.innerHTML += `
           <article class="movie-card">
+            <span class="year-badge">${year}</span>
             <img src="${poster}" alt="${movie.title}">
             <div class="movie-card-body">
               <div>
@@ -704,11 +820,12 @@
                 </div>
               </div>
               <div>
-                <div class="movie-ratings">
-                  <span class="rating-badge imdb-badge">⭐ TMDb ${movie.vote_average.toFixed(1)}</span>
+                <div class="card-footer-row">
+                  <span class="rating-badge">⭐ TMDb ${movie.vote_average.toFixed(1)}</span>
+                  <button class="copy-btn" onclick="copyToClipboard('${safeTitle}', this)">📋 Copy Title</button>
                 </div>
-                <div class="movie-meta" style="margin-top: 0.5rem; margin-bottom:0;">
-                  ${movie.overview ? movie.overview.substring(0, 100) + '...' : ''}
+                <div class="movie-meta" style="margin-top: 0.75rem; margin-bottom:0;">
+                  ${movie.overview ? movie.overview.substring(0, 95) + '...' : ''}
                 </div>
               </div>
             </div>
