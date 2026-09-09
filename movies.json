@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "title": "Ocean's Eleven",
+    "year": 2001,
+    "rating": 7.7,
+    "genre_id": 35,
+    "actor": "George Clooney",
+    "director": "Steven Soderbergh",
+    "language": "en",
+    "poster": "https://m.media-amazon.com/images/M/MV5BYzVmYzVkMmUtOGE3Ny00MWExLTlhMTEtJTY4Metc4G_SX300.jpg",
+    "overview": "Danny Ocean wants to score the biggest heist in history and assembles an 11-member team, including his friend Rusty, to pull off a Las Vegas casino robbery."
+  },
+  {
+    "id": 2,
+    "title": "Inception",
+    "year": 2010,
+    "rating": 8.8,
+    "genre_id": 878,
+    "actor": "Leonardo DiCaprio",
+    "director": "Christopher Nolan",
+    "language": "en",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+    "overview": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O."
+  },
+  {
+    "id": 3,
+    "title": "Parasite",
+    "year": 2019,
+    "rating": 8.5,
+    "genre_id": 18,
+    "actor": "Song Kang-ho",
+    "director": "Bong Joon-ho",
+    "language": "ko",
+    "poster": "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    "overview": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan."
+  },
+  {
+    "id": 4,
+    "title": "Spirited Away",
+    "year": 2001,
+    "rating": 8.6,
+    "genre_id": 14,
+    "actor": "Rumi Hiiragi",
+    "director": "Hayao Miyazaki",
+    "language": "ja",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctTI1ZYS00Y2E1LWEtN2Y5M2FjNTVkM2VlXkEyXkFqcGdeQXVyNTMxMjgxMzA@._V1_SX300.jpg",
+    "overview": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts."
+  },
+  {
+    "id": 5,
+    "title": "Pan's Labyrinth",
+    "year": 2006,
+    "rating": 8.2,
+    "genre_id": 14,
+    "actor": "Ivana Baquero",
+    "director": "Guillermo del Toro",
+    "language": "es",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTU3ODg2NjQ5NF5BMl5BanBnXkFtZTcwMDEwODgzMQ@@._V1_SX300.jpg",
+    "overview": "In the Falangist Spain of 1944, the bookish young stepdaughter of a sadistic army officer escapes into an eerie but captivating fantasy world."
+  },
+  {
+    "id": 6,
+    "title": "The Intouchables",
+    "year": 2011,
+    "rating": 8.5,
+    "genre_id": 35,
+    "actor": "Omar Sy",
+    "director": "Olivier Nakache",
+    "language": "fr",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwN15BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SX300.jpg",
+    "overview": "After he becomes a quadriplegic from a paragliding accident, an aristocrat hires a young man from the projects to be his caregiver."
+  },
+  {
+    "id": 7,
+    "title": "RRR",
+    "year": 2022,
+    "rating": 7.8,
+    "genre_id": 28,
+    "actor": "N.T. Rama Rao Jr.",
+    "director": "S.S. Rajamouli",
+    "language": "hi",
+    "poster": "https://m.media-amazon.com/images/M/MV5BODUwNDNjYzctODUxNy00ZTA2LWIyYTEtMDc5M2RhNDlmZWYxXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
+    "overview": "A fearless revolutionary and an officer in the British force, who are also best friends, join forces to fight against the British Raj."
+  },
+  {
+    "id": 8,
+    "title": "Life Is Beautiful",
+    "year": 1997,
+    "rating": 8.6,
+    "genre_id": 18,
+    "actor": "Roberto Benigni",
+    "director": "Roberto Benigni",
+    "language": "it",
+    "poster": "https://m.media-amazon.com/images/M/MV5BYmJmM2Q4NmMtYThmNC00ZjRlLWEyZmItZTIwOTBlZDQ3NTQ1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "overview": "When an open-minded Jewish waiter and his son become victims of the Holocaust, he uses a perfect mixture of will, humor, and imagination to protect his son."
+  },
+  {
+    "id": 9,
+    "title": "The Dark Knight",
+    "year": 2008,
+    "rating": 9.0,
+    "genre_id": 28,
+    "actor": "Christian Bale",
+    "director": "Christopher Nolan",
+    "language": "en",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg",
+    "overview": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability."
+  },
+  {
+    "id": 10,
+    "title": "The Conjuring",
+    "year": 2013,
+    "rating": 7.5,
+    "genre_id": 27,
+    "actor": "Vera Farmiga",
+    "director": "James Wan",
+    "language": "en",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_SX300.jpg",
+    "overview": "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse."
+  }
+]
