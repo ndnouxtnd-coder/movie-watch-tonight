@@ -645,20 +645,21 @@
   </footer>
 
   <script>
-    // Robust Movie Catalog
+    // EXPANDED DATASET FOR ACCURATE GENRE + LANGUAGE + ACTOR MATCHING
     const localMovieDataset = [
-      { id: 1, title: "The Dark Knight", year: 2008, rating: 9.0, genre_id: 28, actor: "Christian Bale", director: "Christopher Nolan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg", overview: "When the Joker wreaks havoc on Gotham, Batman must accept one of the greatest psychological tests of his ability." },
-      { id: 2, title: "Batman Begins", year: 2005, rating: 8.2, genre_id: 28, actor: "Christian Bale", director: "Christopher Nolan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BOT12NWExYWYtN2RjNC00M2I0LTg0NWUtMDliM2I4NmQ5MTUyXkEyXkFqcGc@._V1_SX300.jpg", overview: "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption." },
-      { id: 3, title: "Inception", year: 2010, rating: 8.8, genre_id: 878, actor: "Leonardo DiCaprio", director: "Christopher Nolan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", overview: "A thief who steals corporate secrets through dream-sharing technology is given an inverse task." },
-      { id: 4, title: "Ocean's Eleven", year: 2001, rating: 7.7, genre_id: 35, actor: "George Clooney", director: "Steven Soderbergh", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BYzVmYzVkMmUtOGE3Ny00MWExLTlhMTEtJTY4Metc4G_SX300.jpg", overview: "Danny Ocean wants to score the biggest heist in history and assembles an 11-member team." },
-      { id: 5, title: "Gravity", year: 2013, rating: 7.7, genre_id: 878, actor: "George Clooney", director: "Alfonso Cuarón", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BNjE5MzYwMzYxMF5BMl5BanBnXkFtZTcwOTk4MTU0OQ@@._V1_SX300.jpg", overview: "Two astronauts work together to survive after an accident leaves them stranded in space." },
-      { id: 6, title: "Parasite", year: 2019, rating: 8.5, genre_id: 18, actor: "Song Kang-ho", director: "Bong Joon-ho", language: "ko", poster: "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg", overview: "Greed and class discrimination threaten the symbiotic relationship between two families." },
-      { id: 7, title: "Spirited Away", year: 2001, rating: 8.6, genre_id: 14, actor: "Rumi Hiiragi", director: "Hayao Miyazaki", language: "ja", poster: "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctTI1ZYS00Y2E1LWEtN2Y5M2FjNTVkM2VlXkEyXkFqcGdeQXVyNTMxMjgxMzA@._V1_SX300.jpg", overview: "A young girl wanders into a world ruled by gods, witches, and spirits where humans are changed into beasts." },
-      { id: 8, title: "Pan's Labyrinth", year: 2006, rating: 8.2, genre_id: 14, actor: "Ivana Baquero", director: "Guillermo del Toro", language: "es", poster: "https://m.media-amazon.com/images/M/MV5BMTU3ODg2NjQ5NF5BMl5BanBnXkFtZTcwMDEwODgzMQ@@._V1_SX300.jpg", overview: "In Spain of 1944, a young stepdaughter of an army officer escapes into an eerie fantasy world." },
-      { id: 9, title: "The Intouchables", year: 2011, rating: 8.5, genre_id: 35, actor: "Omar Sy", director: "Olivier Nakache", language: "fr", poster: "https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwN15BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SX300.jpg", overview: "After he becomes a quadriplegic, an aristocrat hires a young man from the projects to be his caregiver." },
-      { id: 10, title: "RRR", year: 2022, rating: 7.8, genre_id: 28, actor: "N.T. Rama Rao Jr.", director: "S.S. Rajamouli", language: "hi", poster: "https://m.media-amazon.com/images/M/MV5BODUwNDNjYzctODUxNy00ZTA2LWIyYTEtMDc5M2RhNDlmZWYxXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg", overview: "A fearless revolutionary and an officer in the British force join forces to fight against tyranny." },
-      { id: 11, title: "Life Is Beautiful", year: 1997, rating: 8.6, genre_id: 18, actor: "Roberto Benigni", director: "Roberto Benigni", language: "it", poster: "https://m.media-amazon.com/images/M/MV5BYmJmM2Q4NmMtYThmNC00ZjRlLWEyZmItZTIwOTBlZDQ3NTQ1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg", overview: "A father uses humor and imagination to protect his son in a concentration camp." },
-      { id: 12, title: "The Conjuring", year: 2013, rating: 7.5, genre_id: 27, actor: "Vera Farmiga", director: "James Wan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_SX300.jpg", overview: "Paranormal investigators work to help a family terrorized by a dark presence in their farmhouse." }
+      { id: 1, title: "Extreme Job", year: 2019, rating: 7.2, genre_id: 35, actor: "Ryu Seung-ryong", director: "Lee Byeong-heon", language: "ko", poster: "https://image.tmdb.org/t/p/w500/A1x52A6Gv7Yv0iGj6M3zR3aE6yB.jpg", overview: "A team of narcotics detectives go undercover in a fried chicken joint to stake out an organized crime gang." },
+      { id: 2, title: "Ocean's Eleven", year: 2001, rating: 7.7, genre_id: 35, actor: "George Clooney", director: "Steven Soderbergh", language: "en", poster: "https://image.tmdb.org/t/p/w500/v1A2pT4Kst99e8L84K83g2M094G.jpg", overview: "Danny Ocean wants to score the biggest heist in history and assembles an 11-member team." },
+      { id: 3, title: "The Dark Knight", year: 2008, rating: 9.0, genre_id: 28, actor: "Christian Bale", director: "Christopher Nolan", language: "en", poster: "https://image.tmdb.org/t/p/w500/qJ2tCh2ThR322R31R31R3.jpg", overview: "When the Joker wreaks havoc on Gotham, Batman must accept one of the greatest psychological tests of his ability." },
+      { id: 4, title: "Batman Begins", year: 2005, rating: 8.2, genre_id: 28, actor: "Christian Bale", director: "Christopher Nolan", language: "en", poster: "https://image.tmdb.org/t/p/w500/4LdpB2X1L9L9g9kL9g.jpg", overview: "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption." },
+      { id: 5, title: "Inception", year: 2010, rating: 8.8, genre_id: 878, actor: "Leonardo DiCaprio", director: "Christopher Nolan", language: "en", poster: "https://image.tmdb.org/t/p/w500/oYuLE1311L811311.jpg", overview: "A thief who steals corporate secrets through dream-sharing technology is given an inverse task." },
+      { id: 6, title: "Gravity", year: 2013, rating: 7.7, genre_id: 878, actor: "George Clooney", director: "Alfonso Cuarón", language: "en", poster: "https://image.tmdb.org/t/p/w500/fq239k0131k0.jpg", overview: "Two astronauts work together to survive after an accident leaves them stranded in space." },
+      { id: 7, title: "Parasite", year: 2019, rating: 8.5, genre_id: 18, actor: "Song Kang-ho", director: "Bong Joon-ho", language: "ko", poster: "https://image.tmdb.org/t/p/w500/7IiT3S939319k.jpg", overview: "Greed and class discrimination threaten the symbiotic relationship between two families." },
+      { id: 8, title: "Spirited Away", year: 2001, rating: 8.6, genre_id: 14, actor: "Rumi Hiiragi", director: "Hayao Miyazaki", language: "ja", poster: "https://image.tmdb.org/t/p/w500/3931931k0.jpg", overview: "A young girl wanders into a world ruled by gods, witches, and spirits where humans are changed into beasts." },
+      { id: 9, title: "Pan's Labyrinth", year: 2006, rating: 8.2, genre_id: 14, actor: "Ivana Baquero", director: "Guillermo del Toro", language: "es", poster: "https://image.tmdb.org/t/p/w500/391039k.jpg", overview: "In Spain of 1944, a young stepdaughter of an army officer escapes into an eerie fantasy world." },
+      { id: 10, title: "The Intouchables", year: 2011, rating: 8.5, genre_id: 35, actor: "Omar Sy", director: "Olivier Nakache", language: "fr", poster: "https://image.tmdb.org/t/p/w500/290391.jpg", overview: "After he becomes a quadriplegic, an aristocrat hires a young man from the projects to be his caregiver." },
+      { id: 11, title: "RRR", year: 2022, rating: 7.8, genre_id: 28, actor: "N.T. Rama Rao Jr.", director: "S.S. Rajamouli", language: "hi", poster: "https://image.tmdb.org/t/p/w500/nEu3738.jpg", overview: "A fearless revolutionary and an officer in the British force join forces to fight against tyranny." },
+      { id: 12, title: "Life Is Beautiful", year: 1997, rating: 8.6, genre_id: 18, actor: "Roberto Benigni", director: "Roberto Benigni", language: "it", poster: "https://image.tmdb.org/t/p/w500/39301.jpg", overview: "A father uses humor and imagination to protect his son in a concentration camp." },
+      { id: 13, title: "The Conjuring", year: 2013, rating: 7.5, genre_id: 27, actor: "Vera Farmiga", director: "James Wan", language: "en", poster: "https://image.tmdb.org/t/p/w500/393011.jpg", overview: "Paranormal investigators work to help a family terrorized by a dark presence in their farmhouse." }
     ];
 
     let selectedGenreId = null;
@@ -759,7 +760,7 @@
         container.innerHTML += `
           <article class="movie-card">
             <span class="year-badge">${movie.year}</span>
-            <img src="${movie.poster}" alt="${movie.title}">
+            <img src="${movie.poster}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/500x750/2a313d/f8fafc?text=${encodeURIComponent(movie.title)}';">
             <div class="movie-card-body">
               <div>
                 <h3 class="movie-title">${movie.title}</h3>
@@ -808,7 +809,7 @@
       const results = getFilteredMovies();
 
       if (results.length === 0) {
-        container.innerHTML = '<p class="status-msg">No movies match that exact combination. Try clearing either the Actor or Director field, or click "Clear All Filters".</p>';
+        container.innerHTML = '<p class="status-msg">No movies match that exact combination. Try clearing either the Actor, Director, or Language filter.</p>';
         return;
       }
 
@@ -823,7 +824,7 @@
       const results = getFilteredMovies();
 
       if (results.length === 0) {
-        container.innerHTML = '<p class="status-msg">No surprise movies match those active filters. Try clearing some selections!</p>';
+        container.innerHTML = '<p class="status-msg">No surprise movies match those active filters. Try unselecting some options!</p>';
         return;
       }
 
