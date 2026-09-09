@@ -91,7 +91,6 @@
       gap: 1.5rem;
     }
 
-    /* SEO HERO BLOCK ABOVE FILTERS */
     .seo-intro-block {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -120,7 +119,6 @@
       color: var(--accent-orange);
     }
 
-    /* CENTERED BUTTON SECTION */
     .action-buttons-container {
       display: flex;
       flex-direction: column;
@@ -186,7 +184,6 @@
       color: var(--accent-orange);
     }
 
-    /* HORIZONTAL FILTERS GRID */
     .filters-horizontal {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -236,7 +233,6 @@
       overflow: visible !important;
     }
 
-    /* BUBBLE GRIDS (GENRE & COUNTRY) */
     .bubble-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -296,7 +292,6 @@
       color: #000;
     }
 
-    /* AUTOCOMPLETE DROPDOWNS */
     .autocomplete-wrapper {
       position: relative;
       width: 100%;
@@ -327,7 +322,7 @@
       border: 1px solid var(--accent-orange);
       border-radius: 8px;
       margin-top: 6px;
-      max-height: 240px;
+      max-height: 200px;
       overflow-y: auto;
       z-index: 10000;
       box-shadow: 0 10px 25px rgba(0,0,0,0.8);
@@ -335,13 +330,11 @@
     }
 
     .suggestion-item {
-      padding: 0.6rem 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
       cursor: pointer;
       font-size: 0.9rem;
       border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--text-main);
     }
 
     .suggestion-item:hover {
@@ -349,15 +342,6 @@
       color: #000;
     }
 
-    .suggestion-item img {
-      width: 32px;
-      height: 42px;
-      object-fit: cover;
-      border-radius: 4px;
-      background-color: #0f172a;
-    }
-
-    /* PROPOSALS SECTION */
     .proposals {
       width: 100%;
     }
@@ -475,7 +459,6 @@
       padding: 3rem 0;
     }
 
-    /* FOOTER STYLING */
     footer {
       width: 100%;
       margin-top: 4rem;
@@ -506,7 +489,6 @@
 </head>
 <body>
 
-  <!-- CENTERED HEADER -->
   <header>
     <div class="header-content">
       <h1><a href="/">What Movie to Watch <span>Tonight</span></a></h1>
@@ -514,7 +496,6 @@
   </header>
 
   <main>
-    <!-- SEO INTRO BLOCK -->
     <section class="seo-intro-block">
       <h2>Find Your Next Great Watch Instantly</h2>
       <p>
@@ -525,7 +506,6 @@
       </p>
     </section>
 
-    <!-- FILTERS HORIZONTAL -->
     <div class="filters-horizontal">
       
       <!-- 1. GENRE -->
@@ -638,7 +618,6 @@
 
     </div>
 
-    <!-- CENTERED ACTION BUTTONS -->
     <div class="action-buttons-container">
       <div class="button-group">
         <button class="find-movie-btn" onclick="fetchTop3()">Find My Movie</button>
@@ -647,7 +626,6 @@
       <span class="reset-link" onclick="resetAllFilters()">Clear All Filters</span>
     </div>
 
-    <!-- PROPOSALS SECTION -->
     <section class="proposals">
       <h2 class="proposals-header" id="proposalsHeading">Top 3 Proposals</h2>
       <div id="gridContainer" class="grid-container">
@@ -656,7 +634,6 @@
     </section>
   </main>
 
-  <!-- FOOTER WITH ALL COMPLIANCE LINKS -->
   <footer>
     <p>&copy; 2026 What Movie to Watch Tonight. All rights reserved.</p>
     <nav>
@@ -668,13 +645,24 @@
   </footer>
 
   <script>
-    const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE'; 
-    
+    // Robust Movie Catalog
+    const localMovieDataset = [
+      { id: 1, title: "The Dark Knight", year: 2008, rating: 9.0, genre_id: 28, actor: "Christian Bale", director: "Christopher Nolan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg", overview: "When the Joker wreaks havoc on Gotham, Batman must accept one of the greatest psychological tests of his ability." },
+      { id: 2, title: "Batman Begins", year: 2005, rating: 8.2, genre_id: 28, actor: "Christian Bale", director: "Christopher Nolan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BOT12NWExYWYtN2RjNC00M2I0LTg0NWUtMDliM2I4NmQ5MTUyXkEyXkFqcGc@._V1_SX300.jpg", overview: "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption." },
+      { id: 3, title: "Inception", year: 2010, rating: 8.8, genre_id: 878, actor: "Leonardo DiCaprio", director: "Christopher Nolan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg", overview: "A thief who steals corporate secrets through dream-sharing technology is given an inverse task." },
+      { id: 4, title: "Ocean's Eleven", year: 2001, rating: 7.7, genre_id: 35, actor: "George Clooney", director: "Steven Soderbergh", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BYzVmYzVkMmUtOGE3Ny00MWExLTlhMTEtJTY4Metc4G_SX300.jpg", overview: "Danny Ocean wants to score the biggest heist in history and assembles an 11-member team." },
+      { id: 5, title: "Gravity", year: 2013, rating: 7.7, genre_id: 878, actor: "George Clooney", director: "Alfonso Cuarón", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BNjE5MzYwMzYxMF5BMl5BanBnXkFtZTcwOTk4MTU0OQ@@._V1_SX300.jpg", overview: "Two astronauts work together to survive after an accident leaves them stranded in space." },
+      { id: 6, title: "Parasite", year: 2019, rating: 8.5, genre_id: 18, actor: "Song Kang-ho", director: "Bong Joon-ho", language: "ko", poster: "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg", overview: "Greed and class discrimination threaten the symbiotic relationship between two families." },
+      { id: 7, title: "Spirited Away", year: 2001, rating: 8.6, genre_id: 14, actor: "Rumi Hiiragi", director: "Hayao Miyazaki", language: "ja", poster: "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctTI1ZYS00Y2E1LWEtN2Y5M2FjNTVkM2VlXkEyXkFqcGdeQXVyNTMxMjgxMzA@._V1_SX300.jpg", overview: "A young girl wanders into a world ruled by gods, witches, and spirits where humans are changed into beasts." },
+      { id: 8, title: "Pan's Labyrinth", year: 2006, rating: 8.2, genre_id: 14, actor: "Ivana Baquero", director: "Guillermo del Toro", language: "es", poster: "https://m.media-amazon.com/images/M/MV5BMTU3ODg2NjQ5NF5BMl5BanBnXkFtZTcwMDEwODgzMQ@@._V1_SX300.jpg", overview: "In Spain of 1944, a young stepdaughter of an army officer escapes into an eerie fantasy world." },
+      { id: 9, title: "The Intouchables", year: 2011, rating: 8.5, genre_id: 35, actor: "Omar Sy", director: "Olivier Nakache", language: "fr", poster: "https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwN15BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SX300.jpg", overview: "After he becomes a quadriplegic, an aristocrat hires a young man from the projects to be his caregiver." },
+      { id: 10, title: "RRR", year: 2022, rating: 7.8, genre_id: 28, actor: "N.T. Rama Rao Jr.", director: "S.S. Rajamouli", language: "hi", poster: "https://m.media-amazon.com/images/M/MV5BODUwNDNjYzctODUxNy00ZTA2LWIyYTEtMDc5M2RhNDlmZWYxXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg", overview: "A fearless revolutionary and an officer in the British force join forces to fight against tyranny." },
+      { id: 11, title: "Life Is Beautiful", year: 1997, rating: 8.6, genre_id: 18, actor: "Roberto Benigni", director: "Roberto Benigni", language: "it", poster: "https://m.media-amazon.com/images/M/MV5BYmJmM2Q4NmMtYThmNC00ZjRlLWEyZmItZTIwOTBlZDQ3NTQ1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg", overview: "A father uses humor and imagination to protect his son in a concentration camp." },
+      { id: 12, title: "The Conjuring", year: 2013, rating: 7.5, genre_id: 27, actor: "Vera Farmiga", director: "James Wan", language: "en", poster: "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_SX300.jpg", overview: "Paranormal investigators work to help a family terrorized by a dark presence in their farmhouse." }
+    ];
+
     let selectedGenreId = null;
     let selectedLangCode = null;
-    let selectedActorId = null;
-    let selectedDirectorId = null;
-    let debounceTimer = null;
 
     function selectSingleBubble(element, className) {
       const isAlreadySelected = element.classList.contains('selected');
@@ -685,7 +673,7 @@
 
       if (!isAlreadySelected) {
         element.classList.add('selected');
-        if (className === 'genre-bubble') selectedGenreId = element.getAttribute('data-genre-id');
+        if (className === 'genre-bubble') selectedGenreId = parseInt(element.getAttribute('data-genre-id'));
         if (className === 'lang-bubble') selectedLangCode = element.getAttribute('data-lang-code');
       } else {
         if (className === 'genre-bubble') selectedGenreId = null;
@@ -696,8 +684,6 @@
     function resetAllFilters() {
       selectedGenreId = null;
       selectedLangCode = null;
-      selectedActorId = null;
-      selectedDirectorId = null;
 
       document.querySelectorAll('.bubble-option').forEach(b => b.classList.remove('selected'));
       document.getElementById('actorInput').value = '';
@@ -707,13 +693,9 @@
     }
 
     function handleAutocomplete(inputId, listId, type, sectionId) {
-      clearTimeout(debounceTimer);
-      const query = document.getElementById(inputId).value.trim();
+      const query = document.getElementById(inputId).value.trim().toLowerCase();
       const suggestionsList = document.getElementById(listId);
       const sectionElem = document.getElementById(sectionId);
-
-      if (type === 'actor') selectedActorId = null;
-      if (type === 'director') selectedDirectorId = null;
 
       if (query.length < 1) {
         suggestionsList.style.display = 'none';
@@ -721,52 +703,36 @@
         return;
       }
 
-      debounceTimer = setTimeout(async () => {
-        try {
-          const res = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`);
-          if (!res.ok) return;
-          const data = await res.json();
+      const matches = [...new Set(
+        localMovieDataset
+          .map(m => type === 'actor' ? m.actor : m.director)
+          .filter(name => name && name.toLowerCase().includes(query))
+      )].slice(0, 5);
 
-          if (!data.results || data.results.length === 0) {
-            suggestionsList.style.display = 'none';
-            if (sectionElem) sectionElem.classList.remove('active-dropdown');
-            return;
-          }
+      if (matches.length === 0) {
+        suggestionsList.style.display = 'none';
+        if (sectionElem) sectionElem.classList.remove('active-dropdown');
+        return;
+      }
 
-          let items = data.results.slice(0, 5);
+      suggestionsList.innerHTML = matches.map(name => {
+        const safeName = name.replace(/'/g, "\\'");
+        return `
+          <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${safeName}', '${sectionId}')">
+            <strong>${name}</strong>
+          </div>
+        `;
+      }).join('');
 
-          suggestionsList.innerHTML = items.map(person => {
-            const img = person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : 'https://via.placeholder.com/32x42?text=?';
-            const role = person.known_for_department || '';
-            const safeName = person.name.replace(/'/g, "\\'");
-            return `
-              <div class="suggestion-item" onclick="selectPerson('${inputId}', '${listId}', '${safeName}', ${person.id}, '${type}', '${sectionId}')">
-                <img src="${img}" alt="${person.name}">
-                <div>
-                  <strong>${person.name}</strong>
-                  ${role ? `<br><small style="color:var(--text-muted);">${role}</small>` : ''}
-                </div>
-              </div>
-            `;
-          }).join('');
-
-          suggestionsList.style.display = 'block';
-          if (sectionElem) sectionElem.classList.add('active-dropdown');
-        } catch (e) {
-          suggestionsList.style.display = 'none';
-          if (sectionElem) sectionElem.classList.remove('active-dropdown');
-        }
-      }, 250);
+      suggestionsList.style.display = 'block';
+      if (sectionElem) sectionElem.classList.add('active-dropdown');
     }
 
-    function selectPerson(inputId, listId, name, personId, type, sectionId) {
+    function selectPerson(inputId, listId, name, sectionId) {
       document.getElementById(inputId).value = name;
       document.getElementById(listId).style.display = 'none';
       const sectionElem = document.getElementById(sectionId);
       if (sectionElem) sectionElem.classList.remove('active-dropdown');
-
-      if (type === 'actor') selectedActorId = personId;
-      if (type === 'director') selectedDirectorId = personId;
     }
 
     document.addEventListener('click', function (e) {
@@ -783,45 +749,28 @@
       setTimeout(() => { btn.innerText = originalText; }, 1500);
     }
 
-    async function renderCards(movies) {
+    function renderCards(movies) {
       const container = document.getElementById('gridContainer');
       container.innerHTML = '';
 
       for (const movie of movies) {
-        let director = "Unknown";
-        let cast = "N/A";
-
-        try {
-          const creditsRes = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${TMDB_API_KEY}`);
-          const creditsData = await creditsRes.json();
-          
-          const dirObj = creditsData.crew ? creditsData.crew.find(c => c.job === 'Director') : null;
-          if (dirObj) director = dirObj.name;
-
-          if (creditsData.cast && creditsData.cast.length > 0) {
-            cast = creditsData.cast.slice(0, 2).map(c => c.name).join(', ') + '...';
-          }
-        } catch (e) {}
-
-        const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
-        const year = movie.release_date ? movie.release_date.substring(0, 4) : 'N/A';
         const safeTitle = movie.title.replace(/'/g, "\\'");
 
         container.innerHTML += `
           <article class="movie-card">
-            <span class="year-badge">${year}</span>
-            <img src="${poster}" alt="${movie.title}">
+            <span class="year-badge">${movie.year}</span>
+            <img src="${movie.poster}" alt="${movie.title}">
             <div class="movie-card-body">
               <div>
                 <h3 class="movie-title">${movie.title}</h3>
                 <div class="movie-meta">
-                  Director: <span>${director}</span><br>
-                  Main cast: <span>${cast}</span>
+                  Director: <span>${movie.director}</span><br>
+                  Main cast: <span>${movie.actor}</span>
                 </div>
               </div>
               <div>
                 <div class="card-footer-row">
-                  <span class="rating-badge">⭐ TMDb ${movie.vote_average.toFixed(1)}</span>
+                  <span class="rating-badge">⭐ rating ${movie.rating.toFixed(1)}</span>
                   <button class="copy-btn" onclick="copyToClipboard('${safeTitle}', this)">📋 Copy Title</button>
                 </div>
                 <div class="movie-meta" style="margin-top: 0.75rem; margin-bottom:0;">
@@ -834,7 +783,20 @@
       }
     }
 
-    async function fetchTop3() {
+    function getFilteredMovies() {
+      const actorQuery = document.getElementById('actorInput').value.trim().toLowerCase();
+      const directorQuery = document.getElementById('directorInput').value.trim().toLowerCase();
+
+      return localMovieDataset.filter(movie => {
+        if (selectedGenreId && movie.genre_id !== selectedGenreId) return false;
+        if (selectedLangCode && movie.language !== selectedLangCode) return false;
+        if (actorQuery && !movie.actor.toLowerCase().includes(actorQuery)) return false;
+        if (directorQuery && !movie.director.toLowerCase().includes(directorQuery)) return false;
+        return true;
+      });
+    }
+
+    function fetchTop3() {
       const container = document.getElementById('gridContainer');
       document.getElementById('proposalsHeading').innerText = "Top 3 Proposals";
 
@@ -843,57 +805,30 @@
         return;
       }
 
-      container.innerHTML = '<p class="status-msg">Searching top-rated movies...</p>';
+      const results = getFilteredMovies();
 
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=300`;
-
-      if (selectedGenreId) url += `&with_genres=${selectedGenreId}`;
-      if (selectedActorId) url += `&with_cast=${selectedActorId}`;
-      if (selectedDirectorId) url += `&with_crew=${selectedDirectorId}`;
-      if (selectedLangCode) url += `&with_original_language=${selectedLangCode}`;
-
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!data.results || data.results.length === 0) {
-          container.innerHTML = '<p class="status-msg">No top-rated movies found matching your exact criteria. Try broadening your filters!</p>';
-          return;
-        }
-
-        renderCards(data.results.slice(0, 3));
-      } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please check your API key.</p>';
+      if (results.length === 0) {
+        container.innerHTML = '<p class="status-msg">No movies match that exact combination. Try clearing either the Actor or Director field, or click "Clear All Filters".</p>';
+        return;
       }
+
+      results.sort((a, b) => b.rating - a.rating);
+      renderCards(results.slice(0, 3));
     }
 
-    async function fetchSurpriseMovie() {
+    function fetchSurpriseMovie() {
       const container = document.getElementById('gridContainer');
       document.getElementById('proposalsHeading').innerText = "🎲 Your Surprise Pick!";
-      container.innerHTML = '<p class="status-msg">Rolling the dice for a great movie...</p>';
 
-      const randomPage = Math.floor(Math.random() * 5) + 1;
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=500&page=${randomPage}`;
+      const results = getFilteredMovies();
 
-      if (selectedGenreId) url += `&with_genres=${selectedGenreId}`;
-      if (selectedActorId) url += `&with_cast=${selectedActorId}`;
-      if (selectedDirectorId) url += `&with_crew=${selectedDirectorId}`;
-      if (selectedLangCode) url += `&with_original_language=${selectedLangCode}`;
-
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!data.results || data.results.length === 0) {
-          container.innerHTML = '<p class="status-msg">No surprise movies found with those active filters. Try unselecting some options!</p>';
-          return;
-        }
-
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        renderCards([data.results[randomIndex]]);
-      } catch (err) {
-        container.innerHTML = '<p class="status-msg">Error querying TMDb. Please check your API key.</p>';
+      if (results.length === 0) {
+        container.innerHTML = '<p class="status-msg">No surprise movies match those active filters. Try clearing some selections!</p>';
+        return;
       }
+
+      const randomIndex = Math.floor(Math.random() * results.length);
+      renderCards([results[randomIndex]]);
     }
   </script>
 </body>
